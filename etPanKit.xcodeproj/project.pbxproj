@@ -24,7 +24,6 @@
 		C6305084110FC0A900FDD7CA /* LEPIMAPMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C6305083110FC0A900FDD7CA /* LEPIMAPMessagePrivate.h */; };
 		C63050F81114819C00FDD7CA /* LEPAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = C63050F61114819C00FDD7CA /* LEPAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C63050F91114819C00FDD7CA /* LEPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C63050F71114819C00FDD7CA /* LEPAddress.m */; };
-		C63C935611037309006B5066 /* libetpan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C63C92BA110372F7006B5066 /* libetpan.a */; };
 		C64619B11294911600C8B9DE /* LEPIMAPIdleRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = C64619AF1294911600C8B9DE /* LEPIMAPIdleRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C64619B21294911600C8B9DE /* LEPIMAPIdleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C64619B01294911600C8B9DE /* LEPIMAPIdleRequest.m */; };
 		C64A6DFC1141C3E900966BB1 /* localized-mailbox.plist in Resources */ = {isa = PBXBuildFile; fileRef = C64A6DFB1141C3E900966BB1 /* localized-mailbox.plist */; };
@@ -146,31 +145,33 @@
 		C6F956D2129ED302005852A4 /* LEPSMTPCheckRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F956D0129ED302005852A4 /* LEPSMTPCheckRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6F956D3129ED302005852A4 /* LEPSMTPCheckRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F956D1129ED302005852A4 /* LEPSMTPCheckRequest.m */; };
 		FD16A97C16E5C860006B361A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD16A97B16E5C860006B361A /* libxml2.dylib */; };
+		FD16A98A16E5C971006B361A /* libetpan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD16A98716E5C944006B361A /* libetpan.a */; };
+		FD16A98E16E5C9F5006B361A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD16A98D16E5C9F5006B361A /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C63C92B7110372F7006B5066 /* PBXContainerItemProxy */ = {
+		FD16A98416E5C944006B361A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C63C92AE110372F7006B5066 /* libetpan.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = libetpan;
 		};
-		C63C92B9110372F7006B5066 /* PBXContainerItemProxy */ = {
+		FD16A98616E5C944006B361A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C63C92AE110372F7006B5066 /* libetpan.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C69AB10A10546FE500F32FBD;
 			remoteInfo = "static libetpan";
 		};
-		C63C92BB110372F7006B5066 /* PBXContainerItemProxy */ = {
+		FD16A98816E5C944006B361A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C63C92AE110372F7006B5066 /* libetpan.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C6DC660510829E8300FA050B;
-			remoteInfo = "static libetpan iphone";
+			remoteGlobalIDString = C682E2C015B315EF00BE9DA7;
+			remoteInfo = "libetpan ios";
 		};
-		C63C935811037322006B5066 /* PBXContainerItemProxy */ = {
+		FD16A98B16E5C976006B361A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C63C92AE110372F7006B5066 /* libetpan.xcodeproj */;
 			proxyType = 1;
@@ -203,7 +204,7 @@
 		C6305083110FC0A900FDD7CA /* LEPIMAPMessagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEPIMAPMessagePrivate.h; sourceTree = "<group>"; };
 		C63050F61114819C00FDD7CA /* LEPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEPAddress.h; sourceTree = "<group>"; };
 		C63050F71114819C00FDD7CA /* LEPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEPAddress.m; sourceTree = "<group>"; };
-		C63C92AE110372F7006B5066 /* libetpan.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libetpan.xcodeproj; path = "Externals/libetpan/build-mac/libetpan.xcodeproj"; sourceTree = "<group>"; };
+		C63C92AE110372F7006B5066 /* libetpan.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libetpan.xcodeproj; path = "lib/libetpan/build-mac/libetpan.xcodeproj"; sourceTree = "<group>"; };
 		C64619AF1294911600C8B9DE /* LEPIMAPIdleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEPIMAPIdleRequest.h; sourceTree = "<group>"; };
 		C64619B01294911600C8B9DE /* LEPIMAPIdleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEPIMAPIdleRequest.m; sourceTree = "<group>"; };
 		C64A6DFB1141C3E900966BB1 /* localized-mailbox.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "localized-mailbox.plist"; path = "Resources/localized-mailbox.plist"; sourceTree = "<group>"; };
@@ -325,6 +326,7 @@
 		C6F956D1129ED302005852A4 /* LEPSMTPCheckRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEPSMTPCheckRequest.m; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		FD16A97B16E5C860006B361A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		FD16A98D16E5C9F5006B361A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,8 +334,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD16A98E16E5C9F5006B361A /* CFNetwork.framework in Frameworks */,
+				FD16A98A16E5C971006B361A /* libetpan.a in Frameworks */,
 				FD16A97C16E5C860006B361A /* libxml2.dylib in Frameworks */,
-				C63C935611037309006B5066 /* libetpan.a in Frameworks */,
 				C6E5725C1103E73000897274 /* Foundation.framework in Frameworks */,
 				C6F94F24129E6776005852A4 /* Security.framework in Frameworks */,
 			);
@@ -353,24 +356,23 @@
 		0867D691FE84028FC02AAC07 /* etPanKit */ = {
 			isa = PBXGroup;
 			children = (
-				FD16A97B16E5C860006B361A /* libxml2.dylib */,
-				C63C92BD110372FA006B5066 /* Externals */,
+				C63C92BD110372FA006B5066 /* External */,
 				C655A76610F11344009E6B45 /* Source */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				0867D69AFE84028FC02AAC07 /* External */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = etPanKit;
 			sourceTree = "<group>";
 		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+		0867D69AFE84028FC02AAC07 /* External */ = {
 			isa = PBXGroup;
 			children = (
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
-			name = "External Frameworks and Libraries";
+			name = External;
 			sourceTree = "<group>";
 		};
 		089C1665FE841158C02AAC07 /* Resources */ = {
@@ -387,6 +389,8 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD16A97B16E5C860006B361A /* libxml2.dylib */,
+				FD16A98D16E5C9F5006B361A /* CFNetwork.framework */,
 				C6F94F23129E6776005852A4 /* Security.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
@@ -411,22 +415,12 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		C63C92AF110372F7006B5066 /* Products */ = {
+		C63C92BD110372FA006B5066 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				C63C92B8110372F7006B5066 /* libetpan.framework */,
-				C63C92BA110372F7006B5066 /* libetpan.a */,
-				C63C92BC110372F7006B5066 /* libetpan-iphone.a */,
+				FD16A98F16E5CA1B006B361A /* libetpan */,
 			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C63C92BD110372FA006B5066 /* Externals */ = {
-			isa = PBXGroup;
-			children = (
-				C63C92AE110372F7006B5066 /* libetpan.xcodeproj */,
-			);
-			name = Externals;
+			name = External;
 			sourceTree = "<group>";
 		};
 		C655A76610F11344009E6B45 /* Source */ = {
@@ -600,6 +594,24 @@
 			path = icu;
 			sourceTree = "<group>";
 		};
+		FD16A97D16E5C944006B361A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FD16A98516E5C944006B361A /* libetpan.framework */,
+				FD16A98716E5C944006B361A /* libetpan.a */,
+				FD16A98916E5C944006B361A /* libetpan-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FD16A98F16E5CA1B006B361A /* libetpan */ = {
+			isa = PBXGroup;
+			children = (
+				C63C92AE110372F7006B5066 /* libetpan.xcodeproj */,
+			);
+			name = libetpan;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -698,7 +710,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C63C935911037322006B5066 /* PBXTargetDependency */,
+				FD16A98C16E5C976006B361A /* PBXTargetDependency */,
 			);
 			name = etPanKit;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -726,7 +738,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C63C92AF110372F7006B5066 /* Products */;
+					ProductGroup = FD16A97D16E5C944006B361A /* Products */;
 					ProjectRef = C63C92AE110372F7006B5066 /* libetpan.xcodeproj */;
 				},
 			);
@@ -738,25 +750,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C63C92B8110372F7006B5066 /* libetpan.framework */ = {
+		FD16A98516E5C944006B361A /* libetpan.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = libetpan.framework;
-			remoteRef = C63C92B7110372F7006B5066 /* PBXContainerItemProxy */;
+			remoteRef = FD16A98416E5C944006B361A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C63C92BA110372F7006B5066 /* libetpan.a */ = {
+		FD16A98716E5C944006B361A /* libetpan.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libetpan.a;
-			remoteRef = C63C92B9110372F7006B5066 /* PBXContainerItemProxy */;
+			remoteRef = FD16A98616E5C944006B361A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C63C92BC110372F7006B5066 /* libetpan-iphone.a */ = {
+		FD16A98916E5C944006B361A /* libetpan-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libetpan-iphone.a";
-			remoteRef = C63C92BB110372F7006B5066 /* PBXContainerItemProxy */;
+			path = "libetpan-ios.a";
+			remoteRef = FD16A98816E5C944006B361A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -844,10 +856,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C63C935911037322006B5066 /* PBXTargetDependency */ = {
+		FD16A98C16E5C976006B361A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "static libetpan";
-			targetProxy = C63C935811037322006B5066 /* PBXContainerItemProxy */;
+			targetProxy = FD16A98B16E5C976006B361A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -878,10 +890,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = etPanKit_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Externals/libetpan/include",
+					"$(SRCROOT)/lib/libetpan/include",
 					/usr/include/libxml2,
 				);
-				ICU_LDFLAGS = "$(SRCROOT)/Externals/icu/lib/libicui18n.a $(SRCROOT)/Externals/icu/lib/libicuuc.a $(SRCROOT)/Externals/icu/lib/libicudata.a";
+				ICU_LDFLAGS = "$(SRCROOT)/lib/icu/lib/libicui18n.a $(SRCROOT)/lib/icu/lib/libicuuc.a $(SRCROOT)/lib/icu/lib/libicudata.a";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
@@ -908,10 +920,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = etPanKit_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Externals/libetpan/include",
+					"$(SRCROOT)/lib/libetpan/include",
 					/usr/include/libxml2,
 				);
-				ICU_LDFLAGS = "$(SRCROOT)/Externals/icu/lib/libicui18n.a $(SRCROOT)/Externals/icu/lib/libicuuc.a $(SRCROOT)/Externals/icu/lib/libicudata.a";
+				ICU_LDFLAGS = "$(SRCROOT)/lib/icu/lib/libicui18n.a $(SRCROOT)/lib/icu/lib/libicuuc.a $(SRCROOT)/lib/icu/lib/libicudata.a";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_LDFLAGS = (

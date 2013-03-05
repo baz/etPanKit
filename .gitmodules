@@ -1,0 +1,3 @@
+[submodule "lib/libetpan"]
+	path = lib/libetpan
+	url = https://github.com/dinhviethoa/libetpan.git
