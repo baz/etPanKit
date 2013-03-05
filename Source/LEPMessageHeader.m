@@ -56,7 +56,7 @@ static NSArray * msg_id_to_string_array(clist * msgids)
 		NSString * str;
 		
 		msgid = clist_content(cur);
-		str = [NSString stringWithUTF8String:msgid];
+		str = @(msgid);
         if (str == nil) {
             NSData * data;
             
@@ -443,7 +443,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 		mb_list = single_fields.fld_from->frm_mb_list;
 		addresses = lep_address_list_from_lep_mailbox(mb_list);
 		if ([addresses count] > 0) {
-			[self setFrom:[addresses objectAtIndex:0]];
+			[self setFrom:addresses[0]];
 		}
 	}
 	
@@ -493,7 +493,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 		NSString * str;
         
 		msgid = single_fields.fld_message_id->mid_value;
-        str = [NSString stringWithUTF8String:msgid];
+        str = @(msgid);
         if (str == nil) {
             NSData * data;
             
@@ -634,7 +634,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 			
 			addresses = imap_mailbox_list_to_address_array(env->env_sender->snd_list);
 			if ([addresses count] > 0) {
-				[self setSender:[addresses objectAtIndex:0]];
+				[self setSender:addresses[0]];
 			}
 		}
     }
@@ -645,7 +645,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 			
 			addresses = imap_mailbox_list_to_address_array(env->env_from->frm_list);
 			if ([addresses count] > 0) {
-				[self setFrom:[addresses objectAtIndex:0]];
+				[self setFrom:addresses[0]];
 			}
 		}
 	}
@@ -719,7 +719,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 			// msg id
             NSString * str;
             
-            str = [NSString stringWithUTF8String:msgid];
+            str = @(msgid);
             if (str == nil) {
                 NSData * data;
                 
@@ -825,7 +825,7 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 	}
 	from = NULL;
 	if ([self from] != nil) {
-		from = lep_mailbox_list_from_array([NSArray arrayWithObject:[self from]]);
+		from = lep_mailbox_list_from_array(@[[self from]]);
 	}
 	reply_to = NULL;
 	if ([[self replyTo] count] > 0) {

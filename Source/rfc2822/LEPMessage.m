@@ -264,7 +264,7 @@ static struct mailmime * mime_from_attachment(LEPAbstractAttachment * attachment
 			LEPAbstractAttachment * subAtt;
 			struct mailmime * submime;
 			
-			subAtt = [[altAttachment attachments] objectAtIndex:i];
+			subAtt = [altAttachment attachments][i];
 			submime = mime_from_attachment(subAtt, boundary_prefix, filterForSending);
 			mailmime_smart_add_part(mime, submime);
 		}
@@ -300,7 +300,7 @@ static struct mailmime * mime_from_attachments(LEPMessageHeader * header, NSArra
 		LEPAbstractAttachment * attachment;
 		struct mailmime * submime;
 		
-		attachment = [attachments objectAtIndex:i];
+		attachment = attachments[i];
 		submime = mime_from_attachment(attachment, boundary_prefix, filterForSending);
 		add_attachment(mime, submime, boundary_prefix);
 	}

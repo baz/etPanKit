@@ -873,7 +873,7 @@ static char * extract_subject(char * str, int keep_bracket)
     
     result = nil;
     if (decoded != NULL) {
-        result = [NSString stringWithUTF8String:decoded];
+        result = @(decoded);
     }
     else {
         fprintf(stderr, "could not decode: %s\n", phrase);
@@ -1128,7 +1128,7 @@ static void elementStarted(void * ctx, const xmlChar * name, const xmlChar ** at
 			state->enabled = 0;
 			state->disabledLevel = state->level;
 		}
-        else if ([blockElements() containsObject:[[NSString stringWithUTF8String:(const char *) name] lowercaseString]]) {
+        else if ([blockElements() containsObject:[@((const char *) name) lowercaseString]]) {
             returnToLineAtBeginningOfBlock(state);
         }
 		else if (strcasecmp((const char *) name, "blockquote") == 0) {
@@ -1173,7 +1173,7 @@ static void elementEnded(void * ctx, const xmlChar * name)
 	BOOL hasReturnToLine;
     
     hasReturnToLine = NO;
-    if ([blockElements() containsObject:[[NSString stringWithUTF8String:(const char *) name] lowercaseString]]) {
+    if ([blockElements() containsObject:[@((const char *) name) lowercaseString]]) {
         hasReturnToLine = YES;
     }
     else if (strcasecmp((const char *) name, "blockquote") == 0) {
@@ -1252,7 +1252,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 	if (utf7_to_utf8(utf7str, strlen(utf7str), &utf8str, &utf8len) == NULL)
 		return [self copy];
 	
-	result = [NSString stringWithUTF8String:utf8str];
+	result = @(utf8str);
 	free(utf8str);
 	return result;
 }
@@ -1268,7 +1268,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 	if (utf8_to_utf7(utf8str, strlen(utf8str), &utf7str, &utf7len) == NULL)
 		return [self copy];
 	
-	result = [NSString stringWithUTF8String:utf7str];
+	result = @(utf7str);
 	free(utf7str);
 	return result;
 }
@@ -1284,7 +1284,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 	NSString * str;
 	
 	result = extract_subject((char *) [self UTF8String], keepBracket);
-	str = [NSString stringWithUTF8String:result];
+	str = @(result);
 	free(result);
 	
 	return str;
@@ -1338,7 +1338,7 @@ static void baseURLElementStarted(void * ctx, const xmlChar * name, const xmlCha
         attrName = * curAtt;
         attrValue = * (curAtt + 1);
         if (strcasecmp((const char *) attrName, "href") == 0) {
-            state->baseURL = [NSString stringWithUTF8String:(const char *) attrValue];
+            state->baseURL = @((const char *) attrValue);
         }
     }
 }

@@ -37,9 +37,9 @@
     for(NSString * identifier in providers) {
         LEPMailProvider * provider;
         
-        provider = [[LEPMailProvider alloc] initWithInfo:[providers objectForKey:identifier]];
+        provider = [[LEPMailProvider alloc] initWithInfo:providers[identifier]];
         [provider setIdentifier:identifier];
-        [_providers setObject:provider forKey:identifier];
+        _providers[identifier] = provider;
     }
 }
 
@@ -56,7 +56,7 @@
     for(NSString * identifier in _providers) {
         LEPMailProvider * provider;
         
-        provider = [_providers objectForKey:identifier];
+        provider = _providers[identifier];
         if ([provider matchEmail:email])
             return provider;
     }
@@ -69,7 +69,7 @@
     for(NSString * identifier in _providers) {
         LEPMailProvider * provider;
         
-        provider = [_providers objectForKey:identifier];
+        provider = _providers[identifier];
         if ([provider matchMX:[hostname lowercaseString]])
             return provider;
     }
@@ -79,7 +79,7 @@
 
 - (LEPMailProvider *) providerForIdentifier:(NSString *)identifier
 {
-    return [_providers objectForKey:identifier];
+    return _providers[identifier];
 }
 
 @end

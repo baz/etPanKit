@@ -16,37 +16,37 @@
 
 - (LEPIMAPFolder *) sentMailFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"sentmail"]];
+	return [self folderWithPath:_gmailMailboxNames[@"sentmail"]];
 }
 
 - (LEPIMAPFolder *) allMailFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"allmail"]];
+	return [self folderWithPath:_gmailMailboxNames[@"allmail"]];
 }
 
 - (LEPIMAPFolder *) starredFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"starred"]];
+	return [self folderWithPath:_gmailMailboxNames[@"starred"]];
 }
 
 - (LEPIMAPFolder *) trashFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"trash"]];
+	return [self folderWithPath:_gmailMailboxNames[@"trash"]];
 }
 
 - (LEPIMAPFolder *) draftsFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"drafts"]];
+	return [self folderWithPath:_gmailMailboxNames[@"drafts"]];
 }
 
 - (LEPIMAPFolder *) spamFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"spam"]];
+	return [self folderWithPath:_gmailMailboxNames[@"spam"]];
 }
 
 - (LEPIMAPFolder *) importantFolder
 {
-	return [self folderWithPath:[_gmailMailboxNames objectForKey:@"important"]];
+	return [self folderWithPath:_gmailMailboxNames[@"important"]];
 }
 
 - (void) setGmailMailboxNames:(NSDictionary *)gmailMailboxNames

@@ -37,7 +37,7 @@
     if ([_items count] == 0)
         return nil;
     
-    return [[self prefixes] objectAtIndex:0];
+    return [self prefixes][0];
 }
 
 - (char) mainDelimiter
@@ -45,7 +45,7 @@
     if ([_items count] == 0)
         return 0;
     
-    return [[_items objectAtIndex:0] delimiter];
+    return [_items[0] delimiter];
 }
 
 - (NSArray *) prefixes
@@ -65,7 +65,7 @@
     if ([_items count] == 0)
         return nil;
     
-    return [_items objectAtIndex:0];
+    return _items[0];
 }
 
 - (LEPIMAPNamespaceItem *) _itemForPath:(NSString *)path

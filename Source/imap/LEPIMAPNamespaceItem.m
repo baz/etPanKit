@@ -45,7 +45,7 @@
 
 - (void) setFromNamespaceInfo:(struct mailimap_namespace_info *)info
 {
-    [self setPrefix:[NSString stringWithUTF8String:info->ns_prefix]];
+    [self setPrefix:@(info->ns_prefix)];
     [self setDelimiter:info->ns_delimiter];
 }
 
@@ -109,7 +109,7 @@
     components = [self _decodedComponents:components];
     result = [components mutableCopy];
     if ([result count] > 0) {
-        if ([[result objectAtIndex:0] length] == 0) {
+        if ([result[0] length] == 0) {
             [result removeObjectAtIndex:0];
         }
     }

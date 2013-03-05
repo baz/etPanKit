@@ -440,7 +440,7 @@ static void progress(size_t current, size_t maximum, void * context)
 		NSMutableDictionary * userInfo; 
 		
 		userInfo = [[NSMutableDictionary alloc] init];
-		[userInfo setObject:[NSNumber numberWithInt:r] forKey:@"LibetpanError"];
+		userInfo[@"LibetpanError"] = @(r);
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:userInfo];
         [self setError:error];
         goto disconnect;
@@ -470,9 +470,9 @@ unsetup:
         NSMutableDictionary * info;
         
         info = [[NSMutableDictionary alloc] init];
-        [info setObject:_currentProgressDelegate forKey:@"Delegate"];
-        [info setObject:[NSNumber numberWithLongLong:current] forKey:@"Current"];
-        [info setObject:[NSNumber numberWithLongLong:maximum] forKey:@"Maximum"];
+        info[@"Delegate"] = _currentProgressDelegate;
+        info[@"Current"] = [NSNumber numberWithLongLong:current];
+        info[@"Maximum"] = [NSNumber numberWithLongLong:maximum];
         
         [self performSelectorOnMainThread:@selector(_progressOnMainThread:) withObject:info waitUntilDone:NO];
         
@@ -485,9 +485,9 @@ unsetup:
     size_t current;
     size_t maximum;
     
-    delegate = [info objectForKey:@"Delegate"];
-    current = [[info objectForKey:@"Current"] longLongValue];
-    maximum = [[info objectForKey:@"Maximum"] longLongValue];
+    delegate = info[@"Delegate"];
+    current = [info[@"Current"] longLongValue];
+    maximum = [info[@"Maximum"] longLongValue];
     LEPLog(@"smtp body progress %u %u", current, maximum);
     
     [delegate LEPSMTPSession:self progressWithCurrent:current maximum:maximum];

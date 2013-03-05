@@ -158,7 +158,7 @@
     LEPAssert([messages count] > 0);
     
     uidSet = [[NSMutableArray alloc] init];
-    sourceFolder = [[messages objectAtIndex:0] folder];
+    sourceFolder = [messages[0] folder];
     LEPAssert([sourceFolder account] == [toFolder account]);
     for(LEPIMAPMessage * message in messages) {
         LEPAssert([message folder] == sourceFolder);

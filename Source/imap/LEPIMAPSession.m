@@ -478,7 +478,7 @@ static struct mailimap_set * setFromArray(NSArray * array)
     imap_set = mailimap_set_new_empty();
 	
 	while (currentIndex < [array count]) {
-        currentValue = [[array objectAtIndex:currentIndex] unsignedLongValue];
+        currentValue = [array[currentIndex] unsignedLongValue];
         if (currentFirst == 0) {
             currentFirst = currentValue;
         }
@@ -882,7 +882,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         response = @"";
         if (_imap->imap_response != NULL) {
-            response = [NSString stringWithUTF8String:_imap->imap_response];
+            response = @(_imap->imap_response);
         }
         if ([response rangeOfString:@"not enabled for IMAP use"].location != NSNotFound) {
             error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorGmailIMAPNotEnabled userInfo:nil];
@@ -987,7 +987,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
             flags = imap_mailbox_flags_to_flags(mb_list->mb_flag);
         
         folder = [[LEPIMAPFolder alloc] init];
-        path = [NSString stringWithUTF8String:mb_list->mb_name];
+        path = @(mb_list->mb_name);
         if ([[path uppercaseString] isEqualToString:@"INBOX"]) {
             [folder _setPath:@"INBOX"];
         }
@@ -1259,7 +1259,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
 	}
 	_resultUidSet = nil;
 	if (uidresult != 0) {
-		_resultUidSet = [NSArray arrayWithObject:[NSNumber numberWithLong:uidresult]];
+		_resultUidSet = @[[NSNumber numberWithLong:uidresult]];
 	}
 }
 
@@ -1426,7 +1426,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		}
         
         if (uid != 0) {
-            [result setObject:[NSNumber numberWithLongLong:uid] forKey:[NSNumber numberWithLongLong:msg_att->att_number]];
+            result[[NSNumber numberWithLongLong:msg_att->att_number]] = [NSNumber numberWithLongLong:uid];
         }
     }
     
@@ -1577,7 +1577,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
         msg_att = clist_content(iter);
         uid = 0;
         if (mapping != nil) {
-            uid = [[mapping objectForKey:[NSNumber numberWithLongLong:msg_att->att_number]] longLongValue];
+            uid = [mapping[[NSNumber numberWithLongLong:msg_att->att_number]] longLongValue];
         }
         for(item_iter = clist_begin(msg_att->att_list) ; item_iter != NULL ; item_iter = clist_next(item_iter)) {
             struct mailimap_msg_att_item * att_item;
@@ -2024,7 +2024,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
         if ([msgs count] > 0) {
             LEPIMAPMessage * msg;
             
-            msg = [msgs objectAtIndex:0];
+            msg = msgs[0];
             if ([msg uid] > lastUID) {
                 LEPLog(@"found msg UID %i %i", [msg uid], lastUID);
                 return;
@@ -2172,9 +2172,9 @@ static void items_progress(size_t current, size_t maximum, void * context)
         NSMutableDictionary * info;
         
         info = [[NSMutableDictionary alloc] init];
-        [info setObject:_currentProgressDelegate forKey:@"Delegate"];
-        [info setObject:[NSNumber numberWithLongLong:current] forKey:@"Current"];
-        [info setObject:[NSNumber numberWithLongLong:maximum] forKey:@"Maximum"];
+        info[@"Delegate"] = _currentProgressDelegate;
+        info[@"Current"] = [NSNumber numberWithLongLong:current];
+        info[@"Maximum"] = [NSNumber numberWithLongLong:maximum];
         
         [self performSelectorOnMainThread:@selector(_bodyProgressOnMainThread:) withObject:info waitUntilDone:NO];
         
@@ -2193,9 +2193,9 @@ static void items_progress(size_t current, size_t maximum, void * context)
         NSMutableDictionary * info;
         
         info = [[NSMutableDictionary alloc] init];
-        [info setObject:_currentProgressDelegate forKey:@"Delegate"];
-        [info setObject:[NSNumber numberWithLongLong:_progressItemsCount] forKey:@"Current"];
-        [info setObject:[NSNumber numberWithLongLong:maximum] forKey:@"Maximum"];
+        info[@"Delegate"] = _currentProgressDelegate;
+        info[@"Current"] = [NSNumber numberWithLongLong:_progressItemsCount];
+        info[@"Maximum"] = [NSNumber numberWithLongLong:maximum];
         
         [self performSelectorOnMainThread:@selector(_itemsProgressOnMainThread:) withObject:info waitUntilDone:NO];
         
@@ -2208,9 +2208,9 @@ static void items_progress(size_t current, size_t maximum, void * context)
     size_t current;
     size_t maximum;
     
-    delegate = [info objectForKey:@"Delegate"];
-    current = [[info objectForKey:@"Current"] longLongValue];
-    maximum = [[info objectForKey:@"Maximum"] longLongValue];
+    delegate = info[@"Delegate"];
+    current = [info[@"Current"] longLongValue];
+    maximum = [info[@"Maximum"] longLongValue];
     LEPLog(@"imap body progress %u %u", current, maximum);
     
     [delegate LEPIMAPSession:self bodyProgressWithCurrent:current maximum:maximum];
@@ -2222,9 +2222,9 @@ static void items_progress(size_t current, size_t maximum, void * context)
     size_t current;
     size_t maximum;
     
-    delegate = [info objectForKey:@"Delegate"];
-    current = [[info objectForKey:@"Current"] longLongValue];
-    maximum = [[info objectForKey:@"Maximum"] longLongValue];
+    delegate = info[@"Delegate"];
+    current = [info[@"Current"] longLongValue];
+    maximum = [info[@"Maximum"] longLongValue];
     LEPLog(@"imap got item %u %u", current, maximum);
     
     [delegate LEPIMAPSession:self itemsProgressWithCurrent:current maximum:maximum];
@@ -2337,7 +2337,7 @@ struct capability_value capability_values[] = {
     
     capabilityDict = [[NSMutableDictionary alloc] init];
     for(unsigned int i = 0 ; i < sizeof(capability_values) / sizeof(capability_values[0]) ; i ++) {
-        [capabilityDict setObject:[NSNumber numberWithInt:capability_values[i].value] forKey:capability_values[i].name];
+        capabilityDict[capability_values[i].name] = [NSNumber numberWithInt:capability_values[i].value];
     }
     
     for(clistiter * cur = clist_begin(capabilities->cap_list) ; cur != NULL ; cur = cur->next) {
@@ -2349,16 +2349,16 @@ struct capability_value capability_values[] = {
         name = nil;
         switch (capability->cap_type) {
             case MAILIMAP_CAPABILITY_AUTH_TYPE:
-                name = [@"AUTH=" stringByAppendingString:[NSString stringWithUTF8String:capability->cap_data.cap_auth_type]];
+                name = [@"AUTH=" stringByAppendingString:@(capability->cap_data.cap_auth_type)];
                 break;
             case MAILIMAP_CAPABILITY_NAME:
-                name = [NSString stringWithUTF8String:capability->cap_data.cap_name];
+                name = @(capability->cap_data.cap_name);
                 break;
         }
         if (name == nil)
             continue;
         
-        nbValue = [capabilityDict objectForKey:[name uppercaseString]];
+        nbValue = capabilityDict[[name uppercaseString]];
         if (nbValue != nil) {
             [result addIndex:[nbValue intValue]];
         }
@@ -2409,19 +2409,19 @@ struct capability_value capability_values[] = {
     if (namespace_data->ns_personal != NULL) {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_personal];
-        [result setObject:namespace forKey:LEPIMAPNamespacePersonal];
+        result[LEPIMAPNamespacePersonal] = namespace;
     }
     
     if (namespace_data->ns_other != NULL) {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_other];
-        [result setObject:namespace forKey:LEPIMAPNamespaceOther];
+        result[LEPIMAPNamespaceOther] = namespace;
     }
     
     if (namespace_data->ns_shared != NULL) {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_shared];
-        [result setObject:namespace forKey:LEPIMAPNamespaceShared];
+        result[LEPIMAPNamespaceShared] = namespace;
     }
     
     mailimap_namespace_data_free(namespace_data);

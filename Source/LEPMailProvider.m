@@ -38,17 +38,17 @@
     
     self = [self init];
     
-    _domainMatch = [info objectForKey:@"domain-match"];
-    _mailboxPaths = [info objectForKey:@"mailboxes"];
-    mxs = [info objectForKey:@"mx"];
+    _domainMatch = info[@"domain-match"];
+    _mailboxPaths = info[@"mailboxes"];
+    mxs = info[@"mx"];
     for(NSString * mx in mxs) {
         [_mxSet addObject:[mx lowercaseString]];
     }
     
-    serverInfo = [info objectForKey:@"servers"];
-    imapInfos = [serverInfo objectForKey:@"imap"];
-    smtpInfos = [serverInfo objectForKey:@"smtp"];
-    popInfos = [serverInfo objectForKey:@"pop"];
+    serverInfo = info[@"servers"];
+    imapInfos = serverInfo[@"imap"];
+    smtpInfos = serverInfo[@"smtp"];
+    popInfos = serverInfo[@"pop"];
     
     for(NSDictionary * info in imapInfos) {
         LEPNetService * service;
@@ -128,37 +128,37 @@
 
 - (NSString *) sentMailFolderPath
 {
-    return [_mailboxPaths objectForKey:@"sentmail"];
+    return _mailboxPaths[@"sentmail"];
 }
 
 - (NSString *) starredFolderPath
 {
-    return [_mailboxPaths objectForKey:@"starred"];
+    return _mailboxPaths[@"starred"];
 }
 
 - (NSString *) allMailFolderPath
 {
-    return [_mailboxPaths objectForKey:@"allmail"];
+    return _mailboxPaths[@"allmail"];
 }
 
 - (NSString *) trashFolderPath
 {
-    return [_mailboxPaths objectForKey:@"trash"];
+    return _mailboxPaths[@"trash"];
 }
 
 - (NSString *) draftsFolderPath
 {
-    return [_mailboxPaths objectForKey:@"drafts"];
+    return _mailboxPaths[@"drafts"];
 }
 
 - (NSString *) spamFolderPath
 {
-    return [_mailboxPaths objectForKey:@"spam"];
+    return _mailboxPaths[@"spam"];
 }
 
 - (NSString *) importantFolderPath
 {
-    return [_mailboxPaths objectForKey:@"important"];
+    return _mailboxPaths[@"important"];
 }
 
 - (BOOL) isMainFolder:(NSString *)folderPath prefix:(NSString *)prefix

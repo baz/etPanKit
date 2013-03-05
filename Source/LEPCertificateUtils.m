@@ -71,7 +71,7 @@ BOOL lepCheckCertificate(mailstream * stream, NSString * host)
         goto free_policy;
 	}
     
-    r = SecTrustCreateWithCertificates((__bridge CFTypeRef) [NSArray arrayWithObject:(__bridge id) cert], (CFTypeRef) policy, &trust);
+    r = SecTrustCreateWithCertificates((__bridge CFTypeRef) @[(__bridge id) cert], (CFTypeRef) policy, &trust);
     if (r < 0) {
         goto free_policy;
     }

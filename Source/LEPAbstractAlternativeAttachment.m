@@ -41,7 +41,7 @@
 		for(unsigned int i = 0 ; i < [oneAlternative count] ; i ++) {
 			LEPAbstractAttachment * attachment;
 			
-			attachment = [oneAlternative objectAtIndex:i];
+			attachment = oneAlternative[i];
 			if (i == [oneAlternative count] - 1) {
 				[result appendFormat:@"%@", attachment];
 			}

@@ -34,10 +34,10 @@
     
     self = [self init];
     
-    [self setHostname:[info objectForKey:@"hostname"]];
-    [self setPort:[[info objectForKey:@"port"] intValue]];
-    ssl = [[info objectForKey:@"ssl"] boolValue];
-    starttls = [[info objectForKey:@"starttls"] boolValue];
+    [self setHostname:info[@"hostname"]];
+    [self setPort:[info[@"port"] intValue]];
+    ssl = [info[@"ssl"] boolValue];
+    starttls = [info[@"starttls"] boolValue];
     if (ssl) {
         _authType = LEPAuthTypeTLS;
     }
@@ -57,17 +57,17 @@
     
     result = [NSMutableDictionary dictionary];
     if ([self hostname] != nil) {
-        [result setObject:[self hostname] forKey:@"hostname"];
+        result[@"hostname"] = [self hostname];
     }
     if ([self port] != 0) {
-        [result setObject:[NSNumber numberWithInt:[self port]] forKey:@"port"];
+        result[@"port"] = @([self port]);
     }
     switch (_authType & LEPAuthTypeConnectionMask) {
         case LEPAuthTypeTLS:
-            [result setObject:[NSNumber numberWithBool:YES] forKey:@"ssl"];
+            result[@"ssl"] = @YES;
             break;
         case LEPAuthTypeStartTLS:
-            [result setObject:[NSNumber numberWithBool:YES] forKey:@"starttls"];
+            result[@"starttls"] = @YES;
             break;
     }
     

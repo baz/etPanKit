@@ -33,8 +33,8 @@
 - (LEPIMAPFolder *) sentMailFolderForProvider:(LEPMailProvider *)provider
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"sentmail"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"sentmail"]];
+        if (_xListMapping[@"sentmail"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"sentmail"]];
         }
     }
     
@@ -51,8 +51,8 @@
 - (LEPIMAPFolder *) starredFolderForProvider:(LEPMailProvider *)provider
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"starred"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"starred"]];
+        if (_xListMapping[@"starred"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"starred"]];
         }
     }
     
@@ -69,8 +69,8 @@
 - (LEPIMAPFolder *) allMailFolderForProvider:(LEPMailProvider *)provider;
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"allmail"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"allmail"]];
+        if (_xListMapping[@"allmail"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"allmail"]];
         }
     }
     
@@ -87,8 +87,8 @@
 - (LEPIMAPFolder *) trashFolderForProvider:(LEPMailProvider *)provider;
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"trash"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"trash"]];
+        if (_xListMapping[@"trash"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"trash"]];
         }
     }
     
@@ -105,8 +105,8 @@
 - (LEPIMAPFolder *) draftsFolderForProvider:(LEPMailProvider *)provider;
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"drafts"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"drafts"]];
+        if (_xListMapping[@"drafts"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"drafts"]];
         }
     }
     
@@ -123,8 +123,8 @@
 - (LEPIMAPFolder *) spamFolderForProvider:(LEPMailProvider *)provider;
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"spam"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"spam"]];
+        if (_xListMapping[@"spam"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"spam"]];
         }
     }
     
@@ -141,8 +141,8 @@
 - (LEPIMAPFolder *) importantFolderForProvider:(LEPMailProvider *)provider;
 {
     if (_xListMapping != nil) {
-        if ([_xListMapping objectForKey:@"important"] != nil) {
-            return [self _providerFolderWithPath:[_xListMapping objectForKey:@"important"]];
+        if (_xListMapping[@"important"] != nil) {
+            return [self _providerFolderWithPath:_xListMapping[@"important"]];
         }
     }
     
@@ -192,28 +192,28 @@
     result = [NSMutableDictionary dictionary];
     for(LEPIMAPFolder * folder in folders) {
         if (([folder flags] & LEPIMAPMailboxFlagInbox) != 0) {
-            [result setObject:[folder path] forKey:@"inbox"];
+            result[@"inbox"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagSentMail) != 0) {
-            [result setObject:[folder path] forKey:@"sentmail"];
+            result[@"sentmail"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagStarred) != 0) {
-            [result setObject:[folder path] forKey:@"starred"];
+            result[@"starred"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagAllMail) != 0) {
-            [result setObject:[folder path] forKey:@"allmail"];
+            result[@"allmail"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagTrash) != 0) {
-            [result setObject:[folder path] forKey:@"trash"];
+            result[@"trash"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagDrafts) != 0) {
-            [result setObject:[folder path] forKey:@"drafts"];
+            result[@"drafts"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagSpam) != 0) {
-            [result setObject:[folder path] forKey:@"spam"];
+            result[@"spam"] = [folder path];
         }
         else if (([folder flags] & LEPIMAPMailboxFlagImportant) != 0) {
-            [result setObject:[folder path] forKey:@"important"];
+            result[@"important"] = [folder path];
         }
     }
     

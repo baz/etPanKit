@@ -121,7 +121,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 			LEPAttachment * attachment;
 			
 			attachment = [self _attachmentWithSingleMIME:mime];
-			return [NSArray arrayWithObject:attachment];
+			return @[attachment];
 		}
 		case MAILMIME_MULTIPLE:
 		{
@@ -142,7 +142,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 				
 				attachment = [[LEPAlternativeAttachment alloc] init];
 				[attachment setAttachments:subAttachments];
-				return [NSArray arrayWithObject:attachment];
+				return @[attachment];
 			}
 			else {
 				NSMutableArray * result;
@@ -216,7 +216,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 	}
 	
 	str = get_content_type_str(mime->mm_content_type);
-	[result setMimeType:[NSString stringWithUTF8String:str]];
+	[result setMimeType:@(str)];
 	free(str);
 	
 	mailmime_single_fields_init(&single_fields, mime->mm_mime_fields, mime->mm_content_type);
@@ -227,19 +227,19 @@ static char * get_content_type_str(struct mailmime_content * content)
 	loc = single_fields.fld_location;
     
 	if (filename != NULL) {
-		[result setFilename:[NSString stringWithUTF8String:filename]];
+		[result setFilename:@(filename)];
 	}
 	else if (name != NULL) {
-		[result setFilename:[NSString stringWithUTF8String:name]];
+		[result setFilename:@(name)];
 	}
 	if (content_id != NULL) {
-        [result setContentID:[NSString stringWithUTF8String:content_id]];
+        [result setContentID:@(content_id)];
     }
 	if (single_fields.fld_content_charset != NULL) {
-		[result setCharset:[NSString stringWithUTF8String:single_fields.fld_content_charset]];
+		[result setCharset:@(single_fields.fld_content_charset)];
 	}
     if (loc != NULL) {
-        [result setContentLocation:[NSString stringWithUTF8String:loc]];
+        [result setContentLocation:@(loc)];
     }
     
 	if (single_fields.fld_disposition != NULL) {
@@ -406,7 +406,7 @@ static char * get_content_type_str(struct mailmime_content * content)
     NSString * result;
     
     str = get_content_type_str(content);
-    result = [NSString stringWithUTF8String:str];
+    result = @(str);
     free(str);
     
     return result;

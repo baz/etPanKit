@@ -67,13 +67,13 @@
 	self = [super init];
 	
     mailboxes = [[NSMutableDictionary alloc] init];
-    [mailboxes setObject:@"[Google Mail]/All Mail" forKey:@"allmail"];
-    [mailboxes setObject:@"[Google Mail]/Drafts" forKey:@"drafts"];
-    [mailboxes setObject:@"[Google Mail]/Important" forKey:@"important"];
-    [mailboxes setObject:@"[Google Mail]/Sent Mail" forKey:@"sentmail"];
-    [mailboxes setObject:@"[Google Mail]/Spam" forKey:@"spam"];
-    [mailboxes setObject:@"[Google Mail]/Starred" forKey:@"starred"];
-    [mailboxes setObject:@"[Google Mail]/Trash" forKey:@"trash"];
+    mailboxes[@"allmail"] = @"[Google Mail]/All Mail";
+    mailboxes[@"drafts"] = @"[Google Mail]/Drafts";
+    mailboxes[@"important"] = @"[Google Mail]/Important";
+    mailboxes[@"sentmail"] = @"[Google Mail]/Sent Mail";
+    mailboxes[@"spam"] = @"[Google Mail]/Spam";
+    mailboxes[@"starred"] = @"[Google Mail]/Starred";
+    mailboxes[@"trash"] = @"[Google Mail]/Trash";
     [self setGmailMailboxNames:mailboxes];
     
     _sessionsCount = 1;
@@ -373,7 +373,7 @@
 		for(NSString * key in bestItem) {
 			NSString * name;
 			
-			name = [bestItem objectForKey:key];
+			name = bestItem[key];
 			//NSLog(@"%@ -> %@", key, name);
 			if ([name hasPrefix:@"[Gmail]/"]) {
 				if (isGoogleMail) {
@@ -386,7 +386,7 @@
 				}
 			}
 			//NSLog(@"%@ -> %@", key, name);
-			[gmailMailboxes setObject:name forKey:key];
+			gmailMailboxes[key] = name;
 		}
 		//NSLog(@"%@", gmailMailboxes);
 		[self setGmailMailboxNames:gmailMailboxes];

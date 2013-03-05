@@ -31,7 +31,7 @@
 
 - (void) mainFinished
 {
-    [_account _setDefaultNamespace:[_namespaces objectForKey:LEPIMAPNamespacePersonal]];
+    [_account _setDefaultNamespace:_namespaces[LEPIMAPNamespacePersonal]];
 }
 
 @end
