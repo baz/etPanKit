@@ -25,16 +25,6 @@
 
 @implementation LEPIMAPFetchAttachmentRequest
 
-@synthesize data = _data;
-@synthesize path = _path;
-@synthesize partID = _partID;
-@synthesize uid = _uid;
-@synthesize encoding = _encoding;
-@synthesize size = _size;
-@synthesize workaround = _workaround;
-@synthesize currentProgress = _currentProgress;
-@synthesize maximumProgress = _maximumProgress;
-
 - (id) init
 {
 	self = [super init];

@@ -48,9 +48,6 @@
 
 @implementation LEPIMAPAttachment
 
-@synthesize partID = _partID;
-@synthesize size = _size;
-
 - (id) init
 {
 	self = [super init];

@@ -10,8 +10,6 @@
 
 @implementation LEPAbstractAlternativeAttachment
 
-@synthesize attachments = _attachments;
-
 - (id) init
 {
 	self = [super init];

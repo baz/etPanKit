@@ -12,9 +12,6 @@
 
 @implementation LEPIMAPCapabilityRequest
 
-@synthesize selectionEnabled = _selectionEnabled;
-@synthesize capabilities = _capabilities;
-
 - (id) init
 {
 	self = [super init];

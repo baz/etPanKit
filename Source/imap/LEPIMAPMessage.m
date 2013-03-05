@@ -29,12 +29,6 @@
 
 @implementation LEPIMAPMessage
 
-@synthesize flags = _flags;
-@synthesize originalFlags = _originalFlags;
-@synthesize uid = _uid;
-@synthesize folder = _folder;
-@synthesize attachments = _attachments;
-
 - (id) init
 {
 	self = [super init];

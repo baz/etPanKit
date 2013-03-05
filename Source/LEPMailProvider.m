@@ -13,8 +13,6 @@
 
 @implementation LEPMailProvider
 
-@synthesize identifier = _identifier;
-
 - (id) init
 {
     self = [super init];

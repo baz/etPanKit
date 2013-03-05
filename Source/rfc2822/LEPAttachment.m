@@ -101,8 +101,6 @@ static char * get_content_type_str(struct mailmime_content * content)
 
 @implementation LEPAttachment
 
-@synthesize data = _data;
-
 - (id) init
 {
 	self = [super init];

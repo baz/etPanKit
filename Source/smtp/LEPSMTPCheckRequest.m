@@ -12,8 +12,6 @@
 
 @implementation LEPSMTPCheckRequest
 
-@synthesize authType = _authType;
-
 - (id) init
 {
 	self = [super init];

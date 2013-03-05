@@ -12,11 +12,6 @@
 
 @implementation LEPIMAPStoreFlagsRequest
 
-@synthesize path = _path;
-@synthesize uids = _uids;
-@synthesize kind = _kind;
-@synthesize flags = _flags;
-
 - (id) init
 {
 	self = [super init];

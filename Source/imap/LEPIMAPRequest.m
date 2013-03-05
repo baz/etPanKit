@@ -21,13 +21,6 @@
 
 @implementation LEPIMAPRequest
 
-@synthesize delegate = _delegate;
-@synthesize error = _error;
-@synthesize session = _session;
-@synthesize resultUidSet = _resultUidSet;
-@synthesize mailboxSelectionPath = _mailboxSelectionPath;
-@synthesize welcomeString = _welcomeString;
-
 - (id) init
 {
 	self = [super init];

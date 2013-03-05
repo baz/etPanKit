@@ -12,9 +12,6 @@
 
 @implementation LEPAbstractMessageAttachment
 
-@synthesize header = _header;
-@synthesize attachments = _attachments;
-
 - (id) init
 {
 	self = [super init];

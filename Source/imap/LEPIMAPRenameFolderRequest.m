@@ -12,9 +12,6 @@
 
 @implementation LEPIMAPRenameFolderRequest
 
-@synthesize oldPath = _oldPath;
-@synthesize newerPath = _newerPath;
-
 - (id) init
 {
 	self = [super init];

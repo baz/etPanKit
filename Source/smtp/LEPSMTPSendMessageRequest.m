@@ -22,12 +22,6 @@
 
 @implementation LEPSMTPSendMessageRequest
 
-@synthesize messageData = _messageData;
-@synthesize from = _from;
-@synthesize recipient = _recipient;
-@synthesize currentProgress = _currentProgress;
-@synthesize maximumProgress = _maximumProgress;
-
 - (id) init
 {
 	self = [super init];

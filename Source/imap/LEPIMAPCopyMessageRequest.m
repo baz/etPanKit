@@ -12,10 +12,6 @@
 
 @implementation LEPIMAPCopyMessageRequest
 
-@synthesize uidSet = _uidSet;
-@synthesize fromPath = _fromPath;
-@synthesize toPath = _toPath;
-
 - (id) init
 {
 	self = [super init];

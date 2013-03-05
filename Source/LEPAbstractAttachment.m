@@ -11,14 +11,6 @@
 
 @implementation LEPAbstractAttachment
 
-@synthesize filename = _filename;
-@synthesize mimeType = _mimeType;
-@synthesize charset = _charset;
-@synthesize inlineAttachment = _inlineAttachment;
-@synthesize message = _message;
-@synthesize contentID = _contentID;
-@synthesize contentLocation = _contentLocation;
-
 - (id) init
 {
 	self = [super init];

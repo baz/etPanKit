@@ -12,8 +12,6 @@
 
 @implementation LEPIMAPUnsubscribeFolderRequest
 
-@synthesize path = _path;
-
 - (id) init
 {
 	self = [super init];

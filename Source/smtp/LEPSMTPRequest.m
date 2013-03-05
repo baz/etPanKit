@@ -19,10 +19,6 @@
 
 @implementation LEPSMTPRequest
 
-@synthesize delegate = _delegate;
-@synthesize error = _error;
-@synthesize session = _session;
-
 - (id) init
 {
 	self = [super init];

@@ -12,9 +12,6 @@
 
 @implementation LEPIMAPIdleRequest
 
-@synthesize path = _path;
-@synthesize lastUID = _lastUID;
-
 - (id) init
 {
 	self = [super init];

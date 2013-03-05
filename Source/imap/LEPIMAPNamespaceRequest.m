@@ -13,9 +13,6 @@
 
 @implementation LEPIMAPNamespaceRequest
 
-@synthesize namespaces = _namespaces;
-@synthesize account = _account;
-
 - (id) init
 {
 	self = [super init];

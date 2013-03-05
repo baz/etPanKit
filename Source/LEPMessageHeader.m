@@ -334,20 +334,6 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 
 @implementation LEPMessageHeader
 
-@synthesize date = _date;
-@synthesize internalDate = _internalDate;
-@synthesize messageID = _messageID;
-@synthesize references = _references;
-@synthesize inReplyTo = _inReplyTo;
-@synthesize from = _from;
-@synthesize sender = _sender;
-@synthesize to = _to;
-@synthesize cc = _cc;
-@synthesize bcc = _bcc;
-@synthesize replyTo = _replyTo;
-@synthesize subject = _subject;
-@synthesize userAgent = _userAgent;
-
 - (id) init
 {
 	return [self _initWithDate:YES messageID:YES];

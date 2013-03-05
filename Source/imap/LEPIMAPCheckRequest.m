@@ -12,8 +12,6 @@
 
 @implementation LEPIMAPCheckRequest
 
-@synthesize authType = _authType;
-
 - (void) mainRequest
 {
 	_authType = [_session _checkConnection];

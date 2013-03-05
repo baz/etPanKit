@@ -12,9 +12,6 @@
 
 @implementation LEPIMAPNamespaceItem
 
-@synthesize prefix = _prefix;
-@synthesize delimiter = _delimiter;
-
 - (id) init
 {
     self = [super init];

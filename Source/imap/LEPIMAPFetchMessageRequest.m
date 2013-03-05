@@ -20,12 +20,6 @@
 
 @implementation LEPIMAPFetchMessageRequest
 
-@synthesize uid = _uid;
-@synthesize path = _path;
-@synthesize messageData = _messageData;
-@synthesize currentProgress = _currentProgress;
-@synthesize maximumProgress = _maximumProgress;
-
 - (id) init
 {
 	self = [super init];

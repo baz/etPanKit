@@ -21,15 +21,6 @@
 
 @implementation LEPIMAPFetchFolderMessagesRequest
 
-@synthesize path = _path;
-@synthesize fromUID = _fromUID;
-@synthesize toUID = _toUID;
-@synthesize messages = _messages;
-@synthesize fetchKind = _fetchKind;
-@synthesize folder = _folder;
-@synthesize progressCount = _progressCount;
-@synthesize workaround = _workaround;
-
 - (id) init
 {
 	self = [super init];

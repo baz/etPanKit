@@ -38,15 +38,6 @@
 
 @implementation LEPIMAPAccount
 
-@synthesize host = _host;
-@synthesize port = _port;
-@synthesize login = _login;
-@synthesize password = _password;
-@synthesize authType = _authType;
-@synthesize realm = _realm;
-@synthesize sessionsCount = _sessionsCount;
-@synthesize checkCertificate = _checkCertificate;
-
 @synthesize idleEnabled = _idleEnabled;
 
 + (void) setTimeoutDelay:(NSTimeInterval)timeout

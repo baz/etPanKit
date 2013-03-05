@@ -524,20 +524,6 @@ static struct mailimap_set * setFromArray(NSArray * array)
 
 @implementation LEPIMAPSession
 
-@synthesize host = _host;
-@synthesize port = _port;
-@synthesize login = _login;
-@synthesize password = _password;
-@synthesize authType = _authType;
-@synthesize realm = _realm;
-@synthesize checkCertificate = _checkCertificate;
-
-@synthesize error = _error;
-@synthesize resultUidSet = _resultUidSet;
-@synthesize uidValidity = _uidValidity;
-@synthesize uidNext = _uidNext;
-@synthesize welcomeString = _welcomeString;
-
 - (id) init
 {
 	self = [super init];
@@ -555,10 +541,6 @@ static struct mailimap_set * setFromArray(NSArray * array)
 - (void) dealloc
 {
 	[self _unsetup];
-	
-    
-	
-	
 	free(_lepData);
 	
 }

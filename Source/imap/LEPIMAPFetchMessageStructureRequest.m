@@ -14,11 +14,6 @@
 
 @implementation LEPIMAPFetchMessageStructureRequest
 
-@synthesize uid = _uid;
-@synthesize path = _path;
-@synthesize attachments = _attachments;
-@synthesize message = _message;
-
 - (id) init
 {
 	self = [super init];

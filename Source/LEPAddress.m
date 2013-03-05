@@ -13,9 +13,6 @@
 
 @implementation LEPAddress
 
-@synthesize displayName = _displayName;
-@synthesize mailbox = _mailbox;
-
 - (id) init
 {
     self = [super init];

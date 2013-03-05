@@ -19,12 +19,6 @@
 
 @implementation LEPIMAPAppendMessageRequest
 
-@synthesize data = _data;
-@synthesize path = _path;
-@synthesize flags = _flags;
-@synthesize currentProgress = _currentProgress;
-@synthesize maximumProgress = _maximumProgress;
-
 - (id) init
 {
 	self = [super init];

@@ -19,14 +19,6 @@
 
 @implementation LEPSMTPAccount
 
-@synthesize host = _host;
-@synthesize port = _port;
-@synthesize login = _login;
-@synthesize password = _password;
-@synthesize authType = _authType;
-@synthesize realm = _realm;
-@synthesize checkCertificate = _checkCertificate;
-
 - (id) init
 {
 	self = [super init];

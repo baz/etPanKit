@@ -11,9 +11,6 @@
 
 @implementation LEPIMAPFetchFoldersRequest
 
-@synthesize account = _account;
-@synthesize folders = _folders;
-
 - (id) init
 {
 	self = [super init];

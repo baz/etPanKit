@@ -10,10 +10,6 @@
 
 @implementation LEPNetService
 
-@synthesize hostname = _hostname;
-@synthesize port = _port;
-@synthesize authType = _authType;
-
 - (id) init
 {
     self = [super init];

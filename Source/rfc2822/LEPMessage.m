@@ -469,10 +469,6 @@ err:
 
 @implementation LEPMessage
 
-@synthesize body = _body;
-@synthesize HTMLBody = _HTMLBody;
-@synthesize boundaryPrefix = _boundaryPrefix;
-
 - (id) init
 {
 	self = [super init];

@@ -22,8 +22,6 @@
 
 @implementation LEPAbstractMessage
 
-@synthesize header = _header;
-
 - (id) init
 {
 	self = [super init];

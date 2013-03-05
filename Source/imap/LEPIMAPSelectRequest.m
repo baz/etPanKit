@@ -14,9 +14,6 @@
 
 @implementation LEPIMAPSelectRequest
 
-@synthesize path = _path;
-@synthesize folder = _folder;
-
 - (id) init
 {
 	self = [super init];
