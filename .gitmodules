@@ -1,3 +1,3 @@
-[submodule "lib/libetpan"]
-	path = lib/libetpan
+[submodule "External/libetpan"]
+	path = External/libetpan
 	url = https://github.com/dinhviethoa/libetpan.git
