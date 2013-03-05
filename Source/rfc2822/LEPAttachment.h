@@ -12,7 +12,7 @@
 
 + (LEPAttachment *) attachmentWithContentsOfFile:(NSString *)filename;
 
-+ (LEPAttachment *) attachmentWithHTMLString:(NSString *)html; // with alternative by default
++ (LEPAbstractAttachment *) attachmentWithHTMLString:(NSString *)html; // with alternative by default
 + (LEPAttachment *) attachmentWithHTMLString:(NSString *)html withTextAlternative:(BOOL)hasAlternative;
 
 + (LEPAttachment *) attachmentWithString:(NSString *)stringValue;

@@ -8,6 +8,8 @@
  */
 
 #import "LEPIMAPAttachment.h"
+#include <libetpan/mailimap_types.h>
+#include <libetpan/maildriver_types.h>
 
 @interface LEPIMAPAttachment (LEPAttachmentPrivate)
 

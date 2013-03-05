@@ -13,7 +13,7 @@
 @implementation LEPIMAPRenameFolderRequest
 
 @synthesize oldPath = _oldPath;
-@synthesize newPath = _newPath;
+@synthesize newerPath = _newerPath;
 
 - (id) init
 {
@@ -25,13 +25,13 @@
 - (void) dealloc
 {
     [_oldPath release];
-    [_newPath release];
+    [_newerPath release];
 	[super dealloc];
 }
 
 - (void) mainRequest
 {
-	[_session _renameFolder:[self oldPath] withNewPath:[self newPath]];
+	[_session _renameFolder:[self oldPath] withNewPath:[self newerPath]];
 }
 
 @end

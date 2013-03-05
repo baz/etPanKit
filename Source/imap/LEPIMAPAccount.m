@@ -263,8 +263,6 @@
     localizedMailbox = [[NSArray alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"localized-mailbox" ofType:@"plist"]];
     for(NSDictionary * item in localizedMailbox) {
         NSArray * mailboxNames;
-        BOOL match;
-		NSMutableSet * currentSet;
 		
         mailboxNames = [item allValues];
         for(NSString * name in mailboxNames) {
@@ -490,7 +488,7 @@
 	
 	request = [[LEPIMAPRenameFolderRequest alloc] init];
     [request setOldPath:path];
-    [request setNewPath:newPath];
+    [request setNewerPath:newPath];
     
     [self _setupRequest:request];
     

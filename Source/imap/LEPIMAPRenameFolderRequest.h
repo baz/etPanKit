@@ -11,10 +11,10 @@
 
 @interface LEPIMAPRenameFolderRequest : LEPIMAPRequest {
 	NSString * _oldPath;
-	NSString * _newPath;
+	NSString * _newerPath;
 }
 
 @property (nonatomic, copy) NSString * oldPath;
-@property (nonatomic, copy) NSString * newPath;
+@property (nonatomic, copy) NSString * newerPath;
 
 @end

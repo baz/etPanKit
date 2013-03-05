@@ -568,13 +568,13 @@ err:
 	NSData * data;
 	MMAPString * str;
 	int col;
-#warning should generate undisclosed recipient when recipient except Bcc is empty
+	// #warning should generate undisclosed recipient when recipient except Bcc is empty
 	
 	attachments = [self attachments];
 	
 	if (([self HTMLBody] != nil) && ([self body] == nil)) {
 		NSMutableArray * newArray;
-		LEPAttachment * attachment;
+		LEPAbstractAttachment * attachment;
 		
 		attachment = [LEPAttachment attachmentWithHTMLString:[self HTMLBody]];
 		

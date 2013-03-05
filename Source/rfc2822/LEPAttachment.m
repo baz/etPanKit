@@ -317,7 +317,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 	return [self attachmentWithHTMLString:html withTextAlternative:YES];
 }
 
-+ (LEPAttachment *) attachmentWithHTMLString:(NSString *)html withTextAlternative:(BOOL)hasAlternative;
++ (LEPAbstractAttachment *) attachmentWithHTMLString:(NSString *)html withTextAlternative:(BOOL)hasAlternative;
 {
 	if (!hasAlternative) {
 		NSData * data;

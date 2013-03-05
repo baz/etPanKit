@@ -473,7 +473,7 @@ static void progress(size_t current, size_t maximum, void * context)
         goto disconnect;
     }
 	
-#warning should disconnect only when there are no more requests
+	// #warning should disconnect only when there are no more requests
     
     [self _progressWithCurrent:[messageData length] maximum:[messageData length]];
     
@@ -567,8 +567,8 @@ unsetup:
         
         [self _login];
         if ([self error] != nil) {
-            if ([[[self error] domain] isEqualToString:LEPErrorDomain] &&
-                (([[self error] code] == LEPErrorConnection)) || ([[self error] code] == LEPErrorParse)) {
+            if (([[[self error] domain] isEqualToString:LEPErrorDomain] &&
+                (([[self error] code] == LEPErrorConnection))) || ([[self error] code] == LEPErrorParse)) {
                 // disconnect
                 [self _disconnect];
                 [self _unsetup];
