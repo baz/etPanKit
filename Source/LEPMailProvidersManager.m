@@ -31,11 +31,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_providers release];
-    [super dealloc];
-}
 
 - (void) registerProviders:(NSDictionary *)providers
 {
@@ -45,7 +40,6 @@
         provider = [[LEPMailProvider alloc] initWithInfo:[providers objectForKey:identifier]];
         [provider setIdentifier:identifier];
         [_providers setObject:provider forKey:identifier];
-        [provider release];
     }
 }
 
@@ -55,7 +49,6 @@
     
     providersInfos = [[NSDictionary alloc] initWithContentsOfFile:filename];
     [self registerProviders:providersInfos];
-    [providersInfos release];
 }
 
 - (LEPMailProvider *) providerForEmail:(NSString *)email

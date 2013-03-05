@@ -30,16 +30,9 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-	[_error release];
-	[_session release];
-	[super dealloc];
-}
 
 - (void) startRequest
 {
-	[self retain];
 	_started = YES;
 	LEPLog(@"start request %@", _session);
 	[_session queueOperation:self];
@@ -57,7 +50,6 @@
 	if ([self isCancelled]) {
 		if (_started) {
 			_started = NO;
-			[self release];
 		}
 		return;
 	}
@@ -82,7 +74,6 @@
 	if ([self isCancelled]) {
 		if (_started) {
 			_started = NO;
-			[self release];
 		}
 		return;
 	}
@@ -93,7 +84,6 @@
 	[self mainFinished];
 	if (_started) {
 		_started = NO;
-		[self release];
 	}
 	[[self delegate] LEPSMTPRequest_finished:self];
 }

@@ -19,9 +19,9 @@
     size_t _maximumProgress;
 }
 
-@property (nonatomic, retain) NSData * messageData;
-@property (nonatomic, retain) LEPAddress * from;
-@property (nonatomic, retain) NSArray * recipient;
+@property (nonatomic, strong) NSData * messageData;
+@property (nonatomic, strong) LEPAddress * from;
+@property (nonatomic, strong) NSArray * recipient;
 
 // progress
 @property (nonatomic, assign, readonly) size_t currentProgress;

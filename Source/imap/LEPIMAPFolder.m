@@ -46,12 +46,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_account release];
-    [_path release];
-	[super dealloc];
-}
 
 - (void) _setDelimiter:(char)delimiter
 {
@@ -60,7 +54,6 @@
 
 - (void) _setPath:(NSString *)path
 {
-    [_path release];
     _path = [path copy];
 }
 
@@ -97,7 +90,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) renameRequestWithNewPath:(NSString *)newPath
@@ -110,7 +103,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) subscribeRequest
@@ -122,7 +115,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) unsubscribeRequest
@@ -134,7 +127,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) appendMessageRequest:(LEPMessage *)message;
@@ -153,7 +146,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) copyMessages:(NSArray * /* LEPIMAPMessage */)messages toFolder:(LEPIMAPFolder *)toFolder;
@@ -179,9 +172,8 @@
     
     [self _setupRequest:request];
     
-    [uidSet release];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) copyMessagesUIDs:(NSArray * /* NSNumber uint32_t */)messagesUids toFolder:(LEPIMAPFolder *)toFolder
@@ -201,9 +193,8 @@
     
     [self _setupRequest:request];
     
-    [uidSet release];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFolderMessagesRequest *) fetchMessagesRequest
@@ -230,7 +221,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFolderMessagesRequest *) fetchMessagesUIDRequest
@@ -257,7 +248,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFolderMessagesRequest *) fetchMessagesWithStructureRequest
@@ -284,7 +275,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFolderMessagesRequest *) fetchMessagesUIDFlagsRequest
@@ -310,7 +301,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) expungeRequest
@@ -322,7 +313,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) selectRequest
@@ -335,13 +326,12 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (void) _setAccount:(LEPIMAPAccount *)account
 {
-	[_account release];
-	_account = [account retain];
+	_account = account;
 }
 
 - (NSString *) description
@@ -401,11 +391,10 @@
 		[uids addObject:[NSNumber numberWithUnsignedLong:[msg uid]]];
 	}
 	[request setUids:uids];
-	[uids release];
 	
     [self _setupRequest:request];
     
-	return [request autorelease];
+	return request;
 }
 
 - (LEPIMAPRequest *) removeFlagsToMessagesRequest:(NSArray * /* LEPIMAPMessage */)messages flags:(LEPIMAPMessageFlag)flags
@@ -422,11 +411,10 @@
 		[uids addObject:[NSNumber numberWithUnsignedLong:[msg uid]]];
 	}
 	[request setUids:uids];
-	[uids release];
 	
     [self _setupRequest:request];
     
-	return [request autorelease];
+	return request;
 }
 
 - (LEPIMAPRequest *) setFlagsToMessagesRequest:(NSArray * /* LEPIMAPMessage */)messages flags:(LEPIMAPMessageFlag)flags
@@ -443,11 +431,10 @@
 		[uids addObject:[NSNumber numberWithUnsignedLong:[msg uid]]];
 	}
 	[request setUids:uids];
-	[uids release];
 	
     [self _setupRequest:request];
     
-	return [request autorelease];
+	return request;
 }
 
 - (LEPIMAPIdleRequest *) idleRequest
@@ -459,7 +446,7 @@
 	
     [self _setupRequest:request];
     
-	return [request autorelease];
+	return request;
 }
 
 - (LEPIMAPCapabilityRequest *) capabilityRequest
@@ -470,7 +457,7 @@
     [request setSelectionEnabled:YES];
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 + (NSString *) encodePathName:(NSString *)path

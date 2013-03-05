@@ -4,7 +4,7 @@
 @class LEPIMAPSession;
 
 @interface LEPIMAPRequest : NSOperation {
-	id <LEPIMAPRequestDelegate> _delegate;
+	id <LEPIMAPRequestDelegate> __unsafe_unretained _delegate;
 	LEPIMAPSession * _session;
 	NSError * _error;
     NSMutableArray * _resultUidSet;
@@ -13,14 +13,14 @@
     NSString * _welcomeString;
 }
 
-@property (nonatomic, assign) id <LEPIMAPRequestDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id <LEPIMAPRequestDelegate> delegate;
 @property (nonatomic, copy) NSString * mailboxSelectionPath;
 
 // response
 @property (nonatomic, readonly, copy) NSError * error;
-@property (nonatomic, retain) LEPIMAPSession * session;
-@property (nonatomic, readonly, retain) NSArray * resultUidSet;
-@property (nonatomic, readonly, retain) NSString * welcomeString;
+@property (nonatomic, strong) LEPIMAPSession * session;
+@property (nonatomic, readonly, strong) NSArray * resultUidSet;
+@property (nonatomic, readonly, strong) NSString * welcomeString;
 
 // progress
 @property (nonatomic, assign, readonly) size_t currentProgress;

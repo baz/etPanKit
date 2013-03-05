@@ -556,28 +556,18 @@ static struct mailimap_set * setFromArray(NSArray * array)
 {
 	[self _unsetup];
 	
-    [_welcomeString release];
-    [_resultUidSet release];
     
-	[_realm release];
-    [_host release];
-    [_login release];
-    [_password release];
 	
-	[_queue release];
 	
-	[_currentMailbox release];
-	[_error release];
 	free(_lepData);
 	
-	[super dealloc];
 }
 
 static void body_progress(size_t current, size_t maximum, void * context)
 {
     LEPIMAPSession * session;
     
-    session = context;
+    session = (__bridge LEPIMAPSession *)(context);
     [session _bodyProgressWithCurrent:current maximum:maximum];
 }
 
@@ -585,7 +575,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
 {
     LEPIMAPSession * session;
     
-    session = context;
+    session = (__bridge LEPIMAPSession *)(context);
     [session _itemsProgress];
 }
 
@@ -595,7 +585,7 @@ static void items_progress(size_t current, size_t maximum, void * context)
 	
 	_imap = mailimap_new(0, NULL);
     
-    mailimap_set_progress_callback(_imap, body_progress, items_progress, self);
+    mailimap_set_progress_callback(_imap, body_progress, items_progress, (__bridge void *)(self));
 }
 
 - (void) _unsetup
@@ -711,7 +701,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				
 				return;
 			}
@@ -722,7 +711,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorStartTLSNotAvailable userInfo:nil];
 				[self setError:error];
-				[error release];
 				
 				return;
 			}
@@ -731,7 +719,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCertificate userInfo:nil];
 				[self setError:error];
-				[error release];
                 return;
             }
 			
@@ -745,7 +732,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			if (![self _checkCertificate]) {
@@ -753,7 +739,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCertificate userInfo:nil];
 				[self setError:error];
-				[error release];
                 return;
             }
             
@@ -769,7 +754,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
                 LEPLog(@"connect error %i", r);
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			
@@ -777,7 +761,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
     }
 	
     if (_imap->imap_response != NULL) {
-        [_welcomeString release];
         _welcomeString = [[NSString alloc] initWithUTF8String:_imap->imap_response];
     }
     
@@ -884,7 +867,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -892,7 +874,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -906,17 +887,14 @@ static void items_progress(size_t current, size_t maximum, void * context)
         if ([response rangeOfString:@"not enabled for IMAP use"].location != NSNotFound) {
             error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorGmailIMAPNotEnabled userInfo:nil];
             [self setError:error];
-            [error release];
         }
         else if ([response rangeOfString:@"exceeded bandwidth limits"].location != NSNotFound) {
             error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorGmailExceededBandwidthLimit userInfo:nil];
             [self setError:error];
-            [error release];
         }
         else {
             error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorAuthentication userInfo:nil];
             [self setError:error];
-            [error release];
         }
         return;
     }
@@ -940,7 +918,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
         LEPLog(@"select error : %@ %@", self, error);
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -948,7 +925,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -956,13 +932,10 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorNonExistantMailbox userInfo:nil];
 		[self setError:error];
-		[error release];
-        [_currentMailbox release];
         _currentMailbox = nil;
 		return;
 	}
     
-	[_currentMailbox release];
 	_currentMailbox = [mailbox copy];
 	if (_imap->imap_selection_info != NULL) {
 		_uidValidity = _imap->imap_selection_info->sel_uidvalidity;
@@ -984,7 +957,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -992,7 +964,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1000,7 +971,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorNonExistantMailbox userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
 	
@@ -1030,7 +1000,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
         [result addObject:folder];
         
-        [folder release];
     }
     
 	mailimap_list_result_free(list);
@@ -1095,7 +1064,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1103,7 +1071,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1111,7 +1078,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorRename userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -1130,7 +1096,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1138,7 +1103,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1146,7 +1110,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorDelete userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -1165,7 +1128,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1173,7 +1135,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1181,7 +1142,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCreate userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
     
@@ -1202,7 +1162,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1210,7 +1169,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1218,7 +1176,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorSubscribe userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -1237,7 +1194,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1245,7 +1201,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1253,7 +1208,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorUnsubscribe userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -1271,7 +1225,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         return;
     
     _currentProgressDelegate = progressDelegate;
-    [_currentProgressDelegate retain];
     [self _bodyProgressWithCurrent:0 maximum:[messageData length]];
     
     flag_list = NULL;
@@ -1281,7 +1234,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
     mailimap_flag_list_free(flag_list);
     
     [self _bodyProgressWithCurrent:[messageData length] maximum:[messageData length]];
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
 	if (r == MAILIMAP_ERROR_STREAM) {
@@ -1289,7 +1241,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1297,7 +1248,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1305,13 +1255,11 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorAppend userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
-	[_resultUidSet release];
 	_resultUidSet = nil;
 	if (uidresult != 0) {
-		_resultUidSet = [[NSArray arrayWithObject:[NSNumber numberWithLong:uidresult]] retain];
+		_resultUidSet = [NSArray arrayWithObject:[NSNumber numberWithLong:uidresult]];
 	}
 }
 
@@ -1341,7 +1289,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1349,7 +1296,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1357,17 +1303,15 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCopy userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 	
 	if (src_uid != NULL) {
 		mailimap_set_free(src_uid);
 	}
-	[_resultUidSet release];
 	_resultUidSet = nil;
 	if (dest_uid != NULL) {
-		_resultUidSet = [arrayFromSet(dest_uid) retain];
+		_resultUidSet = arrayFromSet(dest_uid);
 		mailimap_set_free(dest_uid);
 	}
 }
@@ -1386,7 +1330,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1394,7 +1337,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -1402,7 +1344,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorExpunge userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -1432,7 +1373,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
     mailimap_fetch_type_free(fetch_type);
     mailimap_set_free(imap_set);
     
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
 	if (r == MAILIMAP_ERROR_STREAM) {
@@ -1441,7 +1381,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error stream");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1450,7 +1389,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error parse");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1459,7 +1397,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error fetch");
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
     
@@ -1526,7 +1463,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
     if ((kind & LEPIMAPMessagesRequestKindHeaders) != 0) {
         _progressItemsCount = 0;
         _currentProgressDelegate = progressDelegate;
-        [_currentProgressDelegate retain];
     }
     
     result = [NSMutableArray array];    
@@ -1595,7 +1531,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
     mailimap_fetch_type_free(fetch_type);
     mailimap_set_free(imap_set);
     
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
 	if (r == MAILIMAP_ERROR_STREAM) {
@@ -1604,7 +1539,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error stream");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1613,7 +1547,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error parse");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1622,7 +1555,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         LEPLog(@"error fetch");
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
     
@@ -1725,15 +1657,12 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		}
 		
         if (needsBody && !hasBody) {
-            [msg release];
             continue;
         }
         if (needsHeader && !hasHeader) {
-            [msg release];
             continue;
         }
         if (needsFlags && !hasFlags) {
-            [msg release];
             continue;
         }
         
@@ -1741,12 +1670,10 @@ static void items_progress(size_t current, size_t maximum, void * context)
             [msg _setUid:uid];
         }
 		else {
-			[msg release];
 			continue;
 		}
 		
 		[result addObject:msg];
-		[msg release];
     }
     
     mailimap_fetch_list_free(fetch_result);
@@ -1767,7 +1694,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 	
     _progressItemsCount = 0;
     _currentProgressDelegate = progressDelegate;
-    [_currentProgressDelegate retain];
     
     rfc822 = NULL;
 	r = fetch_rfc822(_imap, uid, &rfc822);
@@ -1778,7 +1704,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         len = strlen(rfc822);
         [self _bodyProgressWithCurrent:len maximum:len];
     }
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
 	if (r == MAILIMAP_ERROR_STREAM) {
@@ -1786,7 +1711,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1794,7 +1718,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1802,7 +1725,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
 	
@@ -1831,7 +1753,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		LEPLog(@"fetch stream");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1840,7 +1761,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		LEPLog(@"fetch parse");
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1849,7 +1769,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		LEPLog(@"fetch other %u", r);
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
 	
@@ -1882,7 +1801,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 	
     _progressItemsCount = 0;
     _currentProgressDelegate = progressDelegate;
-    [_currentProgressDelegate retain];
     [self _bodyProgressWithCurrent:0 maximum:expectedSize];
     
 	partIDArray = [partID componentsSeparatedByString:@"."];
@@ -1903,7 +1821,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 	mailimap_fetch_type_free(fetch_type);
 	
     [self _bodyProgressWithCurrent:expectedSize maximum:expectedSize];
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
     LEPLog(@"had error : %i", r);
@@ -1912,7 +1829,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -1920,7 +1836,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -1928,7 +1843,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
 	
@@ -2061,7 +1975,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2069,7 +1982,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -2077,7 +1989,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorStore userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -2128,7 +2039,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2136,7 +2046,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -2144,7 +2053,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorIdle userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
     
@@ -2200,7 +2108,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2208,7 +2115,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if ([self _hasError:r]) {
@@ -2216,7 +2122,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorIdle userInfo:nil];
 		[self setError:error];
-		[error release];
         return;
 	}
 }
@@ -2273,7 +2178,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         [self performSelectorOnMainThread:@selector(_bodyProgressOnMainThread:) withObject:info waitUntilDone:NO];
         
-        [info release];
     }
 }
 
@@ -2295,7 +2199,6 @@ static void items_progress(size_t current, size_t maximum, void * context)
         
         [self performSelectorOnMainThread:@selector(_itemsProgressOnMainThread:) withObject:info waitUntilDone:NO];
         
-        [info release];
     }
 }
 
@@ -2346,12 +2249,11 @@ static void items_progress(size_t current, size_t maximum, void * context)
 
 - (void) _setLastMailbox:(NSString *)mailbox
 {
-    [_lastMailboxPath release];
     _lastMailboxPath = [mailbox copy];
 }
 
 struct capability_value {
-    NSString * name;
+    __unsafe_unretained NSString * name;
     char value;
 };
 
@@ -2414,7 +2316,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2422,7 +2323,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -2430,7 +2330,6 @@ struct capability_value capability_values[] = {
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorIdle userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
     
@@ -2465,7 +2364,6 @@ struct capability_value capability_values[] = {
         }
     }
     
-    [capabilityDict release];
     
     mailimap_capability_data_free(capabilities);
     
@@ -2489,7 +2387,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2497,7 +2394,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -2505,7 +2401,6 @@ struct capability_value capability_values[] = {
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorNamespace userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
     
@@ -2515,21 +2410,18 @@ struct capability_value capability_values[] = {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_personal];
         [result setObject:namespace forKey:LEPIMAPNamespacePersonal];
-        [namespace release];
     }
     
     if (namespace_data->ns_other != NULL) {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_other];
         [result setObject:namespace forKey:LEPIMAPNamespaceOther];
-        [namespace release];
     }
     
     if (namespace_data->ns_shared != NULL) {
         namespace = [[LEPIMAPNamespace alloc] init];
         [namespace _setFromNamespace:namespace_data->ns_shared];
         [result setObject:namespace forKey:LEPIMAPNamespaceShared];
-        [namespace release];
     }
     
     mailimap_namespace_data_free(namespace_data);
@@ -2576,7 +2468,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if (r == MAILIMAP_ERROR_PARSE) {
@@ -2584,7 +2475,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     else if ([self _hasError:r]) {
@@ -2592,7 +2482,6 @@ struct capability_value capability_values[] = {
 		
 		error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil];
 		[self setError:error];
-		[error release];
         return nil;
 	}
 	
@@ -2608,7 +2497,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     
@@ -2618,7 +2506,6 @@ struct capability_value capability_values[] = {
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorParse userInfo:nil];
         [self setError:error];
-        [error release];
         return nil;
     }
     

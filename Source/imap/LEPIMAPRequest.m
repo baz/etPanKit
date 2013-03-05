@@ -12,8 +12,8 @@
 @interface LEPIMAPRequest ()
 
 @property (nonatomic, copy) NSError * error;
-@property (nonatomic, retain) NSArray * resultUidSet;
-@property (nonatomic, retain) NSString * welcomeString;
+@property (nonatomic, strong) NSArray * resultUidSet;
+@property (nonatomic, strong) NSString * welcomeString;
 
 - (void) _finished;
 
@@ -35,19 +35,9 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_welcomeString release];
-    [_mailboxSelectionPath release];
-    [_resultUidSet release];
-	[_error release];
-	[_session release];
-	[super dealloc];
-}
 
 - (void) startRequest
 {
-	[self retain];
 	_started = YES;
 	[_session queueOperation:self];
 }
@@ -62,7 +52,6 @@
 	if ([self isCancelled]) {
 		if (_started) {
 			_started = NO;
-			[self release];
 		}
 		return;
 	}
@@ -95,7 +84,6 @@
 	if ([self isCancelled]) {
 		if (_started) {
 			_started = NO;
-			[self release];
 		}
 		return;
 	}
@@ -105,7 +93,6 @@
     
 	if (_started) {
 		_started = NO;
-		[self release];
 	}
 }
 

@@ -18,7 +18,7 @@
 	uint32_t _uidNext;
 }
 
-@property (nonatomic, readonly, retain) LEPIMAPAccount * account;
+@property (nonatomic, readonly, strong) LEPIMAPAccount * account;
 @property (nonatomic, readonly) NSString * path;
 @property (nonatomic, readonly) uint32_t uidValidity;
 @property (nonatomic, readonly) uint32_t uidNext;

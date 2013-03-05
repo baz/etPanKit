@@ -18,8 +18,8 @@
     size_t _maximumProgress;
 }
 
-@property (nonatomic, retain) NSData * data;
-@property (nonatomic, retain) NSString * path;
+@property (nonatomic, strong) NSData * data;
+@property (nonatomic, strong) NSString * path;
 @property (nonatomic) LEPIMAPMessageFlag flags;
 
 // progress

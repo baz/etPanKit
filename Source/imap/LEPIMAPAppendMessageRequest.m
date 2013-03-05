@@ -34,12 +34,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_data release];
-    [_path release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {

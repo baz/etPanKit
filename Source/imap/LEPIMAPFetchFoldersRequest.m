@@ -7,6 +7,7 @@
 //
 
 #import "LEPIMAPFetchFoldersRequest.h"
+#import "LEPIMAPAccount.h"
 
 @implementation LEPIMAPFetchFoldersRequest
 
@@ -20,12 +21,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_account release];
-	[_folders release];
-	[super dealloc];
-}
 
 
 @end

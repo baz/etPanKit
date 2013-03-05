@@ -4,7 +4,7 @@
     NSData * _data;
 }
 
-@property (nonatomic, retain) NSData * data;
+@property (nonatomic, strong) NSData * data;
 
 + (NSString *) mimeTypeFromFilename:(NSString *)filename;
 

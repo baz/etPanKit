@@ -27,17 +27,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_mxSet release];
-    [_domainMatch release];
-    [_imapServices release];
-    [_smtpServices release];
-    [_popServices release];
-    [_mailboxPaths release];
-    [_identifier release];
-    [super dealloc];
-}
 
 - (id) initWithInfo:(NSDictionary *)info
 {
@@ -49,8 +38,8 @@
     
     self = [self init];
     
-    _domainMatch = [[info objectForKey:@"domain-match"] retain];
-    _mailboxPaths = [[info objectForKey:@"mailboxes"] retain];
+    _domainMatch = [info objectForKey:@"domain-match"];
+    _mailboxPaths = [info objectForKey:@"mailboxes"];
     mxs = [info objectForKey:@"mx"];
     for(NSString * mx in mxs) {
         [_mxSet addObject:[mx lowercaseString]];
@@ -66,21 +55,18 @@
         
         service = [[LEPNetService alloc] initWithInfo:info];
         [_imapServices addObject:service];
-        [service release];
     }
     for(NSDictionary * info in smtpInfos) {
         LEPNetService * service;
         
         service = [[LEPNetService alloc] initWithInfo:info];
         [_smtpServices addObject:service];
-        [service release];
     }
     for(NSDictionary * info in popInfos) {
         LEPNetService * service;
         
         service = [[LEPNetService alloc] initWithInfo:info];
         [_popServices addObject:service];
-        [service release];
     }
     
     return self;
@@ -113,7 +99,7 @@
     
     domain = [components lastObject];
     cDomain = [domain UTF8String];
-    for(NSString * match in _domainMatch) {
+    for(__strong NSString * match in _domainMatch) {
         regex_t r;
         BOOL matched;
         

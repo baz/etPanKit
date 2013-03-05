@@ -62,14 +62,8 @@ struct lepData {
 
 - (void) dealloc
 {
-	[_host release];
-	[_login release];
-	[_password release];
-	[_queue release];
-	[_error release];
 	free(_lepData);
 	
-	[super dealloc];
 }
 
 - (void) queueOperation:(LEPSMTPRequest *)request
@@ -83,7 +77,7 @@ static void progress(size_t current, size_t maximum, void * context)
 {
     LEPSMTPSession * session;
     
-    session = context;
+    session = (__bridge LEPSMTPSession *)(context);
     [session _progressWithCurrent:current maximum:maximum];
 }
 
@@ -93,7 +87,7 @@ static void progress(size_t current, size_t maximum, void * context)
 	
 	_smtp = mailsmtp_new(0, NULL);
     
-    mailsmtp_set_progress_callback(_smtp, progress, self);
+    mailsmtp_set_progress_callback(_smtp, progress, (__bridge void *)(self));
 }
 
 - (void) _unsetup
@@ -125,7 +119,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				
 				return;
 			}
@@ -137,7 +130,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			else if (r != MAILSMTP_NO_ERROR) {
@@ -145,7 +137,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			
@@ -156,7 +147,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorStartTLSNotAvailable userInfo:nil];
 				[self setError:error];
-				[error release];
 				
 				return;
 			}
@@ -166,7 +156,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCertificate userInfo:nil];
 				[self setError:error];
-				[error release];
                 return;
             }
 			
@@ -177,7 +166,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			else if (r != MAILSMTP_NO_ERROR) {
@@ -185,7 +173,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
             
@@ -198,7 +185,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			if (![self _checkCertificate]) {
@@ -206,7 +192,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorCertificate userInfo:nil];
 				[self setError:error];
-				[error release];
                 return;
             }
 			
@@ -217,7 +202,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			else if (r != MAILSMTP_NO_ERROR) {
@@ -225,7 +209,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			
@@ -238,7 +221,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			
@@ -249,7 +231,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			else if (r != MAILSMTP_NO_ERROR) {
@@ -257,7 +238,6 @@ static void progress(size_t current, size_t maximum, void * context)
 				
 				error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
 				[self setError:error];
-				[error release];
 				return;
 			}
 			
@@ -389,7 +369,6 @@ static void progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
     else if (r != MAILSMTP_NO_ERROR) {
@@ -397,7 +376,6 @@ static void progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorAuthentication userInfo:nil];
         [self setError:error];
-        [error release];
         return;
     }
 }
@@ -417,7 +395,6 @@ static void progress(size_t current, size_t maximum, void * context)
 	int r;
 	
     _currentProgressDelegate = progressDelegate;
-    [_currentProgressDelegate retain];
     [self _progressWithCurrent:0 maximum:[messageData length]];
     
 	LEPLog(@"setup");
@@ -449,7 +426,6 @@ static void progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:nil];
         [self setError:error];
-        [error release];
         goto disconnect;
     }
 	else if (r == MAILSMTP_ERROR_EXCEED_STORAGE_ALLOCATION) {
@@ -457,7 +433,6 @@ static void progress(size_t current, size_t maximum, void * context)
         
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorStorageLimit userInfo:nil];
         [self setError:error];
-        [error release];
         goto disconnect;
 	}
     else if (r != MAILSMTP_NO_ERROR) {
@@ -468,8 +443,6 @@ static void progress(size_t current, size_t maximum, void * context)
 		[userInfo setObject:[NSNumber numberWithInt:r] forKey:@"LibetpanError"];
         error = [[NSError alloc] initWithDomain:LEPErrorDomain code:LEPErrorConnection userInfo:userInfo];
         [self setError:error];
-        [error release];
-		[userInfo release];
         goto disconnect;
     }
 	
@@ -477,7 +450,6 @@ static void progress(size_t current, size_t maximum, void * context)
     
     [self _progressWithCurrent:[messageData length] maximum:[messageData length]];
     
-    [_currentProgressDelegate release];
     _currentProgressDelegate = nil;
     
 disconnect:
@@ -504,7 +476,6 @@ unsetup:
         
         [self performSelectorOnMainThread:@selector(_progressOnMainThread:) withObject:info waitUntilDone:NO];
         
-        [info release];
     }
 }
 

@@ -30,7 +30,7 @@
 @property (nonatomic, assign) LEPIMAPWorkaround workaround;
 
 // result
-@property (nonatomic, readonly, retain) NSData * data;
+@property (nonatomic, readonly, strong) NSData * data;
 
 // progress
 @property (nonatomic, assign, readonly) size_t currentProgress;

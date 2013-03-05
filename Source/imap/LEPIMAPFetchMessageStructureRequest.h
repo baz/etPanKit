@@ -20,9 +20,9 @@
 
 @property (nonatomic, copy) NSString * path;
 @property (nonatomic, assign) uint32_t uid;
-@property (nonatomic, retain) LEPIMAPMessage * message;
+@property (nonatomic, strong) LEPIMAPMessage * message;
 
 // result
-@property (nonatomic, readonly, retain) NSArray * attachments;
+@property (nonatomic, readonly, strong) NSArray * attachments;
 
 @end

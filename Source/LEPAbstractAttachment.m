@@ -26,15 +26,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_contentLocation release];
-    [_contentID release];
-	[_charset release];
-	[_filename release];
-	[_mimeType release];
-	[super dealloc];
-}
 
 - (NSString *) description
 {
@@ -45,12 +36,12 @@
 {
 	self = [super init];
 	
-    _filename = [[decoder decodeObjectForKey:@"filename"] retain];
-    _mimeType = [[decoder decodeObjectForKey:@"mimeType"] retain];
-	_charset = [[decoder decodeObjectForKey:@"charset"] retain];
+    _filename = [decoder decodeObjectForKey:@"filename"];
+    _mimeType = [decoder decodeObjectForKey:@"mimeType"];
+	_charset = [decoder decodeObjectForKey:@"charset"];
 	_inlineAttachment = [decoder decodeBoolForKey:@"inlineAttachment"];
-	_contentID = [[decoder decodeObjectForKey:@"contentID"] retain];
-	_contentLocation = [[decoder decodeObjectForKey:@"contentLocation"] retain];
+	_contentID = [decoder decodeObjectForKey:@"contentID"];
+	_contentLocation = [decoder decodeObjectForKey:@"contentLocation"];
     
 	return self;
 }

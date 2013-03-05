@@ -75,7 +75,6 @@
     [mailboxes setObject:@"[Google Mail]/Starred" forKey:@"starred"];
     [mailboxes setObject:@"[Google Mail]/Trash" forKey:@"trash"];
     [self setGmailMailboxNames:mailboxes];
-    [mailboxes release];
     
     _sessionsCount = 1;
     _checkCertificate = YES;
@@ -86,12 +85,6 @@
 - (void) dealloc
 {
     [self _unsetupSession];
-    [_xListMapping release];
-	[_realm release];
-    [_host release];
-    [_login release];
-    [_password release];
-	[super dealloc];
 }
 
 - (LEPIMAPFetchFoldersRequest *) fetchSubscribedFoldersRequest
@@ -103,7 +96,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFoldersRequest *) fetchAllFoldersRequest
@@ -115,7 +108,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchFoldersRequest *) fetchAllFoldersUsingXListRequest
@@ -128,7 +121,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) createFolderRequest:(NSString *)path
@@ -140,7 +133,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPCapabilityRequest *) capabilityRequest
@@ -150,7 +143,7 @@
 	request = [[LEPIMAPCapabilityRequest alloc] init];
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPNamespaceRequest *) namespaceRequest
@@ -161,7 +154,7 @@
     [request setAccount:self];
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPCheckRequest *) checkRequest
@@ -171,7 +164,7 @@
 	request = [[LEPIMAPCheckRequest alloc] init];
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (void) _setupSession
@@ -193,13 +186,11 @@
         [session setRealm:[self realm]];
         [session setCheckCertificate:[self checkCertificate]];
         [_sessions addObject:session];
-        [session release];
     }
 }
 
 - (void) _unsetupSession
 {
-    [_sessions release];
     _sessions = nil;
 }
 
@@ -241,7 +232,7 @@
 	[folder _setPath:path];
 	[folder _setAccount:self];
 	
-	return [folder autorelease];
+	return folder;
 }
 
 - (void) setupWithFoldersPaths:(NSArray *)paths
@@ -372,7 +363,6 @@
 			bestItem = item;
 		}
 		
-		[currentSet release];
     }
 	
 	if (bestItem != nil) {
@@ -400,13 +390,9 @@
 		}
 		//NSLog(@"%@", gmailMailboxes);
 		[self setGmailMailboxNames:gmailMailboxes];
-		[gmailMailboxes release];
 	}
 	
     //[folderNameSet release];
-	[folderNameArray release];
-    [detectableMailbox release];
-    [localizedMailbox release];
 }
 
 - (void) cancel
@@ -432,7 +418,6 @@
     
     result = [pathSet containsObject:[folder path]];
     
-    [pathSet release];
     
     return result;
 }
@@ -468,8 +453,7 @@
 
 - (void) _setDefaultNamespace:(LEPIMAPNamespace *)ns
 {
-    [_defaultNamespace release];
-    _defaultNamespace = [ns retain];
+    _defaultNamespace = ns;
 }
 
 - (void) setupNamespaceWithPrefix:(NSString *)prefix delimiter:(char)delimiter;
@@ -492,7 +476,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPRequest *) deleteRequestPath:(NSString *)path
@@ -504,7 +488,7 @@
     
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 @end

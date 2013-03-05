@@ -926,7 +926,7 @@ struct parserState {
 	int level;
 	int enabled;
 	int disabledLevel;
-	NSMutableString * result;
+	__unsafe_unretained NSMutableString * result;
 	int logEnabled;
     int hasQuote;
     int quoteLevel;
@@ -1014,9 +1014,7 @@ static void charactersParsed(void* context,
                 state->hasText = YES;
             }
         }
-        [modifiedString release];
     }
-	[parsedString release];
 }
 
 /* GCS: custom error function to ignore errors */
@@ -1252,7 +1250,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 	
 	utf7str = [self UTF8String];
 	if (utf7_to_utf8(utf7str, strlen(utf7str), &utf8str, &utf8len) == NULL)
-		return [[self copy] autorelease];
+		return [self copy];
 	
 	result = [NSString stringWithUTF8String:utf8str];
 	free(utf8str);
@@ -1268,7 +1266,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 	
 	utf8str = [self UTF8String];
 	if (utf8_to_utf7(utf8str, strlen(utf8str), &utf7str, &utf7len) == NULL)
-		return [[self copy] autorelease];
+		return [self copy];
 	
 	result = [NSString stringWithUTF8String:utf7str];
 	free(utf7str);
@@ -1313,7 +1311,7 @@ static void commentParsed(void * ctx, const xmlChar * value)
 
 struct baseURLParserState {
     int headClosed;
-    NSString * baseURL;
+    __unsafe_unretained NSString * baseURL;
 };
 
 static void baseURLElementStarted(void * ctx, const xmlChar * name, const xmlChar ** atts)

@@ -58,11 +58,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-	[_partID release];
-	[super dealloc];
-}
 
 - (void) _setupRequest:(LEPIMAPRequest *)request
 {
@@ -82,7 +77,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 + (NSArray *) attachmentsWithIMAPBody:(struct mailimap_body *)body
@@ -156,21 +151,19 @@
 	
 	if (message->bd_body->bd_type == MAILIMAP_BODY_1PART) {
 		if (partID == nil) {
-			nextPartID = [@"1" retain];
+			nextPartID = @"1";
 		}
 		else {
 			nextPartID = [[NSString alloc] initWithFormat:@"%@.1", partID];
 		}
 	}
 	else {
-		nextPartID = [partID retain];
+		nextPartID = partID;
 	}
 	subAttachments = [self _attachmentsWithIMAPBody:message->bd_body withPartID:nextPartID];
 	[attachment setAttachments:subAttachments];
-	[nextPartID release];
 	
     result = [NSArray arrayWithObject:attachment];
-	[attachment release];
 	
 	return result;
 }
@@ -273,9 +266,8 @@
 			break;
 	}
 	[attachment setMimeType:mimeType];
-	[mimeType release];
 	
-	return [attachment autorelease];
+	return attachment;
 }
 
 + (LEPAbstractAttachment *) _attachmentWithIMAPBody1PartText:(struct mailimap_body_type_text *)text
@@ -287,7 +279,7 @@
 	[attachment _setFieldsFromFields:text->bd_fields extension:extension];
 	[attachment setMimeType:[NSString stringWithFormat:@"text/%@", [NSString stringWithUTF8String:text->bd_media_text]]];
 	
-	return [attachment autorelease];
+	return attachment;
 }
 
 + (NSArray *) _attachmentWithIMAPBodyMultipart:(struct mailimap_body_type_mpart *)body_mpart
@@ -320,7 +312,6 @@
 			}
 			body = clist_content(cur);
 			subResult = [self _attachmentsWithIMAPBody:body withPartID:nextPartID];
-			[nextPartID release];
 			[attachments addObject:subResult];
 			
 			count ++;
@@ -329,9 +320,7 @@
 		attachment = [[LEPIMAPAlternativeAttachment alloc] init];
 		[attachment setAttachments:attachments];
 		[result addObject:attachment];
-		[attachment release];
 		
-		[attachments release];
 	}
 	else {
 		// multipart/*
@@ -353,7 +342,6 @@
 			body = clist_content(cur);
 			subResult = [self _attachmentsWithIMAPBody:body withPartID:nextPartID];
 			[result addObjectsFromArray:subResult];
-			[nextPartID release];
 			
 			count ++;
 		}
@@ -363,7 +351,6 @@
 
 - (void) _setPartID:(NSString *)partID
 {
-	[_partID release];
 	_partID = [partID copy];
 }
 
@@ -386,7 +373,7 @@
 {
 	self = [super initWithCoder:coder];
 	
-	_partID = [[coder decodeObjectForKey:@"partID"] retain];
+	_partID = [coder decodeObjectForKey:@"partID"];
 	_encoding = [coder decodeInt32ForKey:@"encoding"];
 	_size = [coder decodeInt32ForKey:@"size"];
 	
@@ -408,7 +395,6 @@
     attachment = [super copyWithZone:zone];
     
     attachment->_encoding = self->_encoding;
-    [attachment->_partID release];
     attachment->_partID = [self->_partID copy];
     attachment->_size = self->_size;
     

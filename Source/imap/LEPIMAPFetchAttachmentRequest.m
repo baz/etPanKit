@@ -42,20 +42,13 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-	[_data release];
-	[_path release];
-	[_partID release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
 	LEPLog(@"fetch %@ %u", _partID, _uid);
-	_data = [[_session _fetchAttachmentWithPartID:_partID UID:_uid path:_path encoding:_encoding
+	_data = [_session _fetchAttachmentWithPartID:_partID UID:_uid path:_path encoding:_encoding
                                      expectedSize:_size
-                                 progressDelegate:self] retain];
+                                 progressDelegate:self];
     if ([_session error] == nil)
         return;
     if (![[[_session error] domain] isEqualToString:LEPErrorDomain])
@@ -79,7 +72,7 @@
                 if ([_session error] != nil)
                     return;
                 
-                _data = [[LEPAttachment dataForPartID:_partID encoding:_encoding messageData:messageData] retain];
+                _data = [LEPAttachment dataForPartID:_partID encoding:_encoding messageData:messageData];
                 if (_data == nil) {
                     [_session _setError:[NSError errorWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil]];
                     return;
@@ -108,7 +101,7 @@
             
             NSString * subPartID;
             subPartID = [_partID substringFromIndex:[currentPartID length] + 1];
-            _data = [[LEPAttachment dataForPartID:subPartID encoding:_encoding messageData:messageData] retain];
+            _data = [LEPAttachment dataForPartID:subPartID encoding:_encoding messageData:messageData];
             if (_data == nil) {
                 [_session _setError:[NSError errorWithDomain:LEPErrorDomain code:LEPErrorFetch userInfo:nil]];
                 return;

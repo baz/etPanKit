@@ -26,18 +26,11 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_message release];
-	[_attachments release];
-	[_path release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
 	LEPLog(@"request attachments");
-	_attachments = [[_session _fetchMessageStructureWithUID:_uid path:_path message:_message] retain];
+	_attachments = [_session _fetchMessageStructureWithUID:_uid path:_path message:_message];
 }
 
 @end

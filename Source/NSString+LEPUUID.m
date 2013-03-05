@@ -14,9 +14,9 @@
 + (NSString *) lepUUIDString
 {
     CFUUIDRef uuidObj = CFUUIDCreate(nil);
-    NSString * newUUID = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    NSString * newUUID = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
     CFRelease(uuidObj);
-    return [newUUID autorelease];
+    return newUUID;
 }
 
 @end

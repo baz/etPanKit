@@ -480,15 +480,6 @@ err:
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_boundaryPrefix release];
-	[_HTMLBody release];
-	[_body release];
-	[_attachments release];
-    
-	[super dealloc];
-}
 
 - (id) initWithData:(NSData *)data
 {
@@ -528,10 +519,9 @@ err:
 	NSMutableArray * attachments;
 	attachments = [[NSMutableArray alloc] init];
 	for(LEPAbstractAttachment * attachment in [self attachments]) {
-		[attachments addObject:[[attachment copy] autorelease]];
+		[attachments addObject:[attachment copy]];
 	}
     [message setAttachments:attachments];
-	[attachments release];
     
     return message;
 }
@@ -545,10 +535,8 @@ err:
 	
 	mailmessage_get_bodystructure(msg, &mime);
 	
-	[_attachments release];
 	_attachments = [LEPAttachment attachmentsWithMIME:msg->msg_mime];
 	[[self header] setFromIMFFields:msg->msg_fields];
-	[_attachments retain];
 	for(LEPAbstractAttachment * attachment in _attachments) {
 		[attachment setMessage:self];
 	}
@@ -597,7 +585,6 @@ err:
 		altAttachment = [LEPAttachment attachmentWithHTMLString:[self HTMLBody] withTextAlternative:NO];
 		[altAttachments addObject:altAttachment];
 		[alternative setAttachments:altAttachments];
-		[altAttachments release];
 		
 		newArray = [NSMutableArray array];
 		[newArray addObject:alternative];
@@ -641,7 +628,6 @@ err:
 	}
 	[array addObject:attachment];
 	[self setAttachments:array];
-	[array release];
 }
 
 - (NSArray *) attachments
@@ -651,11 +637,10 @@ err:
 
 - (void) setAttachments:(NSArray *)attachments
 {
-	[_attachments release];
 	for(LEPAbstractAttachment * attachment in attachments) {
 		[attachment setMessage:self];
 	}
-	_attachments = [attachments retain];
+	_attachments = attachments;
 }
 
 @end

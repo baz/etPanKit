@@ -4,16 +4,16 @@
 @class LEPSMTPSession;
 
 @interface LEPSMTPRequest : NSOperation {
-	id <LEPSMTPRequestDelegate> _delegate;
+	id <LEPSMTPRequestDelegate> __unsafe_unretained _delegate;
 	NSError * _error;
 	LEPSMTPSession * _session;
 	BOOL _started;
 }
 
-@property (assign) id <LEPSMTPRequestDelegate> delegate;
+@property (unsafe_unretained) id <LEPSMTPRequestDelegate> delegate;
 
 @property (nonatomic, readonly, copy) NSError * error;
-@property (nonatomic, retain) LEPSMTPSession * session;
+@property (nonatomic, strong) LEPSMTPSession * session;
 
 // progress
 @property (nonatomic, assign, readonly) size_t currentProgress;

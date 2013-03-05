@@ -16,9 +16,9 @@
 	LEPIMAPAccount * _account;
 }
 
-@property (nonatomic, retain) LEPIMAPAccount * account;
+@property (nonatomic, strong) LEPIMAPAccount * account;
 
 // result
-@property (nonatomic, retain, readonly) NSArray * /* LEPIMAPFolder */ folders;
+@property (nonatomic, strong, readonly) NSArray * /* LEPIMAPFolder */ folders;
 
 @end

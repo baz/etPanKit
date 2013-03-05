@@ -17,6 +17,6 @@
 @property (nonatomic, assign) BOOL selectionEnabled;
 
 // result
-@property (nonatomic, retain, readonly) NSIndexSet * capabilities;
+@property (nonatomic, strong, readonly) NSIndexSet * capabilities;
 
 @end

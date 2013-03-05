@@ -23,12 +23,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_displayName release];
-    [_mailbox release];
-    [super dealloc];
-}
 
 - (id) copyWithZone:(NSZone *)zone
 {
@@ -49,7 +43,7 @@
 	[address setDisplayName:displayName];
 	[address setMailbox:mailbox];
 	
-	return [address autorelease];
+	return address;
 }
 
 + (LEPAddress *) addressWithMailbox:(NSString *)mailbox
@@ -139,7 +133,7 @@
 #endif
 	[address setMailbox:mailbox];
     
-    return [address autorelease];
+    return address;
 }
 
 + (LEPAddress *) addressWithIMFMailbox:(struct mailimf_mailbox *)mailbox
@@ -157,7 +151,7 @@
         [address setMailbox:@""];
     }
 	
-    return [address autorelease];
+    return address;
 }
 
 + (LEPAddress *) addressWithNonEncodedIMFMailbox:(struct mailimf_mailbox *)mailbox
@@ -175,7 +169,7 @@
         [address setMailbox:@""];
     }
 	
-    return [address autorelease];
+    return address;
 }
 
 - (struct mailimf_mailbox *) createIMFMailbox
@@ -219,8 +213,8 @@
 {
 	self = [super init];
 	
-	_displayName = [[coder decodeObjectForKey:@"displayName"] retain];
-	_mailbox = [[coder decodeObjectForKey:@"mailbox"] retain];
+	_displayName = [coder decodeObjectForKey:@"displayName"];
+	_mailbox = [coder decodeObjectForKey:@"mailbox"];
 	
 	return self;
 }

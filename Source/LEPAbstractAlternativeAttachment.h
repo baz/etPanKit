@@ -14,6 +14,6 @@
 }
 
 // array of array of attachments
-@property (nonatomic, retain) NSArray * attachments;
+@property (nonatomic, strong) NSArray * attachments;
 
 @end

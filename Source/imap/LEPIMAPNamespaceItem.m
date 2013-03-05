@@ -22,11 +22,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_prefix release];
-    [super dealloc];
-}
 
 - (NSString *) prefixWithDelimiter:(BOOL)withDelimiter
 {
@@ -119,7 +114,7 @@
         }
     }
     
-    return [result autorelease];
+    return result;
 }
 
 @end

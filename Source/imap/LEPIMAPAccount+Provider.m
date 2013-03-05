@@ -158,7 +158,6 @@
 
 - (void) setXListMapping:(NSDictionary *)mapping
 {
-    [_xListMapping release];
     _xListMapping = [mapping copy];
 }
 
@@ -179,7 +178,6 @@
             count ++;
         }
     }
-    [pathsSet release];
     
     if (count > 0) {
 		[self setXListMapping:mapping];

@@ -21,7 +21,7 @@
 @property (nonatomic) uint32_t uid;
 
 // result
-@property (nonatomic, readonly, retain) NSData * messageData;
+@property (nonatomic, readonly, strong) NSData * messageData;
 
 // progress
 @property (nonatomic, assign, readonly) size_t currentProgress;

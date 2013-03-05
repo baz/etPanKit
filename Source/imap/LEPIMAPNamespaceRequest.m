@@ -23,16 +23,10 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_account release];
-    [_namespaces release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
-    _namespaces = [[_session _namespace] retain];
+    _namespaces = [_session _namespace];
 }
 
 - (void) mainFinished

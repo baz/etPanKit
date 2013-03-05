@@ -35,13 +35,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_messageData release];
-	[_from release];
-	[_recipient release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {

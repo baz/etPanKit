@@ -31,11 +31,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_items release];
-    [super dealloc];
-}
 
 - (NSString *) mainPrefix
 {
@@ -112,7 +107,6 @@
         item = [[LEPIMAPNamespaceItem alloc] init];
         [item setFromNamespaceInfo:info];
         [_items addObject:item];
-        [item release];
     }
 }
 
@@ -131,12 +125,11 @@
     LEPIMAPNamespace * namespace;
     LEPIMAPNamespaceItem * item;
     
-    namespace = [[[LEPIMAPNamespace alloc] init] autorelease];
+    namespace = [[LEPIMAPNamespace alloc] init];
     item = [[LEPIMAPNamespaceItem alloc] init];
     [item setDelimiter:delimiter];
     [item setPrefix:prefix];
     [namespace->_items addObject:item];
-    [item release];
     
     return namespace;
 }

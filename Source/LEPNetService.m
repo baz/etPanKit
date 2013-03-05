@@ -21,15 +21,10 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_hostname release];
-    [super dealloc];
-}
 
 - (id) copyWithZone:(NSZone *)zone
 {
-    return [[LEPNetService netServiceWithInfo:[self info]] retain];
+    return [LEPNetService netServiceWithInfo:[self info]];
 }
 
 - (id) initWithInfo:(NSDictionary *)info
@@ -81,7 +76,7 @@
 
 + (LEPNetService *) netServiceWithInfo:(NSDictionary *)info
 {
-    return [[[LEPNetService alloc] initWithInfo:info] autorelease];
+    return [[LEPNetService alloc] initWithInfo:info];
 }
 
 @end

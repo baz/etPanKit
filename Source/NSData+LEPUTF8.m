@@ -14,7 +14,7 @@
 
 - (NSString *) lepUTF8String
 {
-	return [[[NSString alloc] initWithData:self encoding:NSUTF8StringEncoding] autorelease];
+	return [[NSString alloc] initWithData:self encoding:NSUTF8StringEncoding];
 }
 
 - (NSString *) lepStringWithCharset:(NSString *)charset

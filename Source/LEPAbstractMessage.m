@@ -42,11 +42,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_header release];
-	[super dealloc];
-}
 
 - (NSString *) description
 {
@@ -57,7 +52,7 @@
 {
 	self = [super init];
 	
-	_header = [[decoder decodeObjectForKey:@"header"] retain];
+	_header = [decoder decodeObjectForKey:@"header"];
 	
 	return self;
 }
@@ -83,8 +78,7 @@
 		message = [[[self class] alloc] init];
 	}
     
-    [message->_header release];
-    message->_header = [[self header] retain];
+    message->_header = [self header];
     
     return message;
 }

@@ -22,12 +22,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_oldPath release];
-    [_newerPath release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {

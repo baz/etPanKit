@@ -27,10 +27,10 @@
 @property (nonatomic) uint32_t fromUID;
 @property (nonatomic) uint32_t toUID;
 @property (nonatomic) LEPIMAPMessagesRequestKind fetchKind;
-@property (nonatomic, retain) LEPIMAPFolder * folder;
+@property (nonatomic, strong) LEPIMAPFolder * folder;
 @property (nonatomic, assign) LEPIMAPWorkaround workaround;
 
-@property (nonatomic, retain, readonly) NSArray * /* LEPIMAPMessage */ messages;
+@property (nonatomic, strong, readonly) NSArray * /* LEPIMAPMessage */ messages;
 
 // progress
 @property (nonatomic, assign, readonly) unsigned int progressCount;

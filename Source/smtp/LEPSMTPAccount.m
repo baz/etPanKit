@@ -35,14 +35,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-	[_realm release];
-	[_host release];
-	[_login release];
-	[_password release];
-	[super dealloc];
-}
 
 - (void) _setupSession
 {
@@ -61,7 +53,6 @@
 
 - (void) _unsetupSession
 {
-	[_session release];
 	_session = nil;
 }
 
@@ -99,11 +90,10 @@
 	[recipient addObjectsFromArray:[[message header] cc]];
 	[recipient addObjectsFromArray:[[message header] bcc]];
 	[request setRecipient:recipient];
-	[recipient release];
 	
     [self _setupRequest:request];
 	
-	return [request autorelease];
+	return request;
 }
 
 - (LEPSMTPRequest *) checkConnectionRequest
@@ -114,7 +104,7 @@
 	
     [self _setupRequest:request];
 	
-	return [request autorelease];
+	return request;
 }
 
 @end

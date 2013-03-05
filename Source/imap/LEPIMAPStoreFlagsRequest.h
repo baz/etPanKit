@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic, copy) NSString * path;
-@property (nonatomic, retain) NSArray * uids;
+@property (nonatomic, strong) NSArray * uids;
 @property (nonatomic, assign) LEPIMAPStoreFlagsRequestKind kind;
 @property (nonatomic, assign) LEPIMAPMessageFlag flags;
 

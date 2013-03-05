@@ -9,7 +9,7 @@
     NSString * _contentID;
     NSString * _contentLocation;
 	BOOL _inlineAttachment;
-	LEPAbstractMessage * _message;
+	LEPAbstractMessage * __unsafe_unretained _message;
 }
 
 @property (nonatomic, copy) NSString * filename;
@@ -18,6 +18,6 @@
 @property (nonatomic, copy) NSString * contentID;
 @property (nonatomic, copy) NSString * contentLocation;
 @property (nonatomic, assign, getter=isInlineAttachment) BOOL inlineAttachment;
-@property (nonatomic, assign) LEPAbstractMessage * message;
+@property (nonatomic, unsafe_unretained) LEPAbstractMessage * message;
 
 @end

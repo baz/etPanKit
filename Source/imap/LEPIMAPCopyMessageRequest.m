@@ -23,13 +23,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_uidSet release];
-    [_toPath release];
-    [_fromPath release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {

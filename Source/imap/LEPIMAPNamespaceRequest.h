@@ -16,9 +16,9 @@
     LEPIMAPAccount * _account;
 }
 
-@property (nonatomic, retain) LEPIMAPAccount * account;
+@property (nonatomic, strong) LEPIMAPAccount * account;
 
 // result
-@property (nonatomic, retain, readonly) NSDictionary * namespaces;
+@property (nonatomic, strong, readonly) NSDictionary * namespaces;
 
 @end

@@ -17,6 +17,6 @@
 }
 
 @property (nonatomic, copy) NSString * path;
-@property (nonatomic, retain) LEPIMAPFolder * folder;
+@property (nonatomic, strong) LEPIMAPFolder * folder;
 
 @end

@@ -19,11 +19,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_attachments release];
-	[super dealloc];
-}
 
 - (void) setMessage:(LEPAbstractMessage *)message
 {
@@ -65,7 +60,7 @@
 {
 	self = [super initWithCoder:decoder];
 	
-	_attachments = [[decoder decodeObjectForKey:@"attachments"] retain];
+	_attachments = [decoder decodeObjectForKey:@"attachments"];
 	
 	return self;
 }
@@ -90,15 +85,13 @@
         
         attachments = [[NSMutableArray alloc] init];
         for(LEPAbstractAttachment * attachment in oneAlternative) {
-            [attachments addObject:[[attachment copy] autorelease]];
+            [attachments addObject:[attachment copy]];
         }
         [alternatives addObject:attachments];
-        [attachments release];
     }
     
 	[attachment setAttachments:alternatives];
 	
-    [alternatives release];
     
     return attachment;
 }

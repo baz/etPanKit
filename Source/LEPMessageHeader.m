@@ -62,7 +62,6 @@ static NSArray * msg_id_to_string_array(clist * msgids)
             
             data = [[NSData alloc] initWithBytes:msgid length:strlen(msgid)];
             str = [data lepStringWithCharset:@"utf-8"];
-            [data release];
         }
 		[result addObject:str];
 	}
@@ -385,36 +384,17 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
             }
             
             if (hostname == nil) {
-                hostname = [@"localhost" retain];
+                hostname = @"localhost";
             }
 		}
 		pthread_mutex_unlock(&lock);
 		messageID = [[NSString alloc] initWithFormat:@"%@@%@", [NSString lepUUIDString], hostname];
 		[self setMessageID:messageID];
-		[messageID release];
 	}
 	
 	return self;
 }
 
-- (void) dealloc
-{
-	[_userAgent release];
-    [_sender release];
-	[_messageID release];
-	[_references release];
-	[_inReplyTo release];
-	[_from release];
-	[_to release];
-	[_cc release];
-	[_bcc release];
-    [_replyTo release];
-	[_subject release];
-	[_internalDate release];
-    [_date release];
-    
-	[super dealloc];
-}
 
 - (void) setFromIMFFields:(struct mailimf_fields *)fields
 {
@@ -519,7 +499,6 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
             
             data = [[NSData alloc] initWithBytes:msgid length:strlen(msgid)];
             str = [data lepStringWithCharset:@"utf-8"];
-            [data release];
         }
 		[self setMessageID:str];
 	}
@@ -746,7 +725,6 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
                 
                 data = [[NSData alloc] initWithBytes:msgid length:strlen(msgid)];
                 str = [data lepStringWithCharset:@"utf-8"];
-                [data release];
             }
 			[self setMessageID:str];
             mailimf_msg_id_free(msgid);
@@ -925,16 +903,16 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
 {
 	self = [super init];
 	
-	_messageID = [[decoder decodeObjectForKey:@"messageID"] retain];
-	_references = [[decoder decodeObjectForKey:@"references"] retain];
-	_inReplyTo = [[decoder decodeObjectForKey:@"inReplyTo"] retain];
+	_messageID = [decoder decodeObjectForKey:@"messageID"];
+	_references = [decoder decodeObjectForKey:@"references"];
+	_inReplyTo = [decoder decodeObjectForKey:@"inReplyTo"];
 #if 1
-	_sender = [[decoder decodeObjectForKey:@"sender"] retain];
-	_from = [[decoder decodeObjectForKey:@"from"] retain];
-	_to = [[decoder decodeObjectForKey:@"to"] retain];
-	_cc = [[decoder decodeObjectForKey:@"cc"] retain];
-	_bcc = [[decoder decodeObjectForKey:@"bcc"] retain];
-	_replyTo = [[decoder decodeObjectForKey:@"replyTo"] retain];
+	_sender = [decoder decodeObjectForKey:@"sender"];
+	_from = [decoder decodeObjectForKey:@"from"];
+	_to = [decoder decodeObjectForKey:@"to"];
+	_cc = [decoder decodeObjectForKey:@"cc"];
+	_bcc = [decoder decodeObjectForKey:@"bcc"];
+	_replyTo = [decoder decodeObjectForKey:@"replyTo"];
 #else
     NSString * encoded;
     encoded = [decoder decodeObjectForKey:@"sender"];
@@ -962,11 +940,11 @@ static struct mailimf_address_list * lep_address_list_from_array(NSArray * addre
         _bcc = [[LEPAddress addressesWithRFC822String:encoded] retain];
     }
 #endif
-	_subject = [[decoder decodeObjectForKey:@"subject"] retain];
-	_date = [[decoder decodeObjectForKey:@"date"] retain];
-	_internalDate = [[decoder decodeObjectForKey:@"internalDate"] retain];
+	_subject = [decoder decodeObjectForKey:@"subject"];
+	_date = [decoder decodeObjectForKey:@"date"];
+	_internalDate = [decoder decodeObjectForKey:@"internalDate"];
 	if (_internalDate == nil) {
-		_internalDate = [_date retain];
+		_internalDate = _date;
 	}
 	
 	return self;

@@ -42,12 +42,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-	[_attachments release];
-    [_folder release];
-	[super dealloc];
-}
 
 - (void) _setUid:(uint32_t)uid
 {
@@ -56,8 +50,7 @@
 
 - (void) _setAttachments:(NSArray *)attachments
 {
-	[_attachments release];
-	_attachments = [attachments retain];
+	_attachments = attachments;
 	for(LEPAbstractAttachment * attachment in _attachments) {
 		[attachment setMessage:self];
 	}
@@ -80,7 +73,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchMessageRequest *) fetchMessageRequest;
@@ -93,7 +86,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (LEPIMAPFetchAttachmentRequest *) fetchAttachmentRequestWithPartID:(NSString *)partID
@@ -109,7 +102,7 @@
 	
     [self _setupRequest:request];
     
-    return [request autorelease];
+    return request;
 }
 
 - (NSString *) description
@@ -155,10 +148,9 @@
 		
 		attachments = [[NSMutableArray alloc] init];
 		for(LEPAbstractAttachment * attachment in [self attachments]) {
-			[attachments addObject:[[attachment copy] autorelease]];
+			[attachments addObject:[attachment copy]];
 		}
 		[message _setAttachments:attachments];
-		[attachments release];
 	}
     
     return message;

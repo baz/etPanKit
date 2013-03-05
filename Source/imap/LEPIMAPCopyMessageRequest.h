@@ -15,7 +15,7 @@
     NSString * _toPath;
 }
 
-@property (nonatomic, retain) NSArray * uidSet;
+@property (nonatomic, strong) NSArray * uidSet;
 @property (nonatomic, copy) NSString * fromPath;
 @property (nonatomic, copy) NSString * toPath;
 

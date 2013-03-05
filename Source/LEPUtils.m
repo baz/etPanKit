@@ -22,29 +22,27 @@ void LEPLogInternal(const char * filename, unsigned int line, int dumpStack, NSS
 {
 	va_list argp;
 	NSString * str;
-	NSAutoreleasePool * pool;
 	char * filenameCopy;
 	char * lastPathComponent;
 	struct timeval tv;
 	struct tm tm_value;
 	//NSDictionary * enabledFilenames;
     
-	pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-    pthread_mutex_lock(&lock);
-    if (enabledFilesSet == nil) {
-        enabledFilesSet = [[NSSet alloc] initWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:LEPLogEnabledFilenames]];
-    }
-    pthread_mutex_unlock(&lock);
-    
-    NSString * fn;
-    fn = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:filename length:strlen(filename)];
-    fn = [fn lastPathComponent];
-    if (![enabledFilesSet containsObject:fn]) {
-        [pool release];
-        return;
-    }
-    
+        pthread_mutex_lock(&lock);
+        if (enabledFilesSet == nil) {
+            enabledFilesSet = [[NSSet alloc] initWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:LEPLogEnabledFilenames]];
+        }
+        pthread_mutex_unlock(&lock);
+        
+        NSString * fn;
+        fn = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:filename length:strlen(filename)];
+        fn = [fn lastPathComponent];
+        if (![enabledFilesSet containsObject:fn]) {
+            return;
+        }
+        
 	va_start(argp, format);
 	str = [[NSString alloc] initWithFormat:format arguments:argp];
 	va_end(argp);
@@ -55,7 +53,7 @@ void LEPLogInternal(const char * filename, unsigned int line, int dumpStack, NSS
 	{
 		outputfileStream = fopen( [outputFileName UTF8String], "w+" );
 	}
-    
+        
 	if ( NULL == outputfileStream )
 		outputfileStream = stderr;
 	
@@ -69,23 +67,22 @@ void LEPLogInternal(const char * filename, unsigned int line, int dumpStack, NSS
 	fprintf(outputfileStream, "(%s:%u) ", lastPathComponent, line);
 	free(filenameCopy);
 	fprintf(outputfileStream, "%s\n", [str UTF8String]);
-	[str release];
 	
-    if (dumpStack) {
-        void * frame[128];
-        int frameCount;
-        int i;
-        
-        frameCount = backtrace(frame, 128);
-        for(i = 0 ; i < frameCount ; i ++) {
-            fprintf(outputfileStream, "  %p\n", frame[i]);
+        if (dumpStack) {
+            void * frame[128];
+            int frameCount;
+            int i;
+            
+            frameCount = backtrace(frame, 128);
+            for(i = 0 ; i < frameCount ; i ++) {
+                fprintf(outputfileStream, "  %p\n", frame[i]);
+            }
         }
-    }
 	
 	if ( outputFileName )
 	{
 		fflush(outputfileStream);
 	}
     
-	[pool release];
+	}
 }

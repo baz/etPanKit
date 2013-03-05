@@ -16,7 +16,7 @@
 
 - (void) mainRequest
 {
-	_folders = [[_session _fetchSubscribedFoldersWithAccount:_account] retain];
+	_folders = [_session _fetchSubscribedFoldersWithAccount:_account];
 }
 
 @end

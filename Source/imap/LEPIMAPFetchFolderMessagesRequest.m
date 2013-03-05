@@ -8,6 +8,7 @@
 
 #import "LEPIMAPFetchFolderMessagesRequest.h"
 
+#import "LEPIMAPFolder.h"
 #import "LEPIMAPSession.h"
 #import "LEPIMAPSessionPrivate.h"
 #import "LEPUtils.h"
@@ -36,13 +37,6 @@
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_messages release];
-    [_path release];
-	[_folder release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
@@ -59,8 +53,8 @@
         }
     }
     
-    _messages = [[_session _fetchFolderMessages:_path fromUID:_fromUID toUID:_toUID kind:_fetchKind folder:_folder
-                               progressDelegate:self] retain];
+    _messages = [_session _fetchFolderMessages:_path fromUID:_fromUID toUID:_toUID kind:_fetchKind folder:_folder
+                               progressDelegate:self];
 }
 
 - (void) LEPIMAPSession:(LEPIMAPSession *)session bodyProgressWithCurrent:(size_t)current maximum:(size_t)maximum

@@ -51,8 +51,7 @@
 
 - (void) setGmailMailboxNames:(NSDictionary *)gmailMailboxNames
 {
-    [_gmailMailboxNames release];
-    _gmailMailboxNames = [gmailMailboxNames retain];
+    _gmailMailboxNames = gmailMailboxNames;
 }
 
 - (NSDictionary *) gmailMailboxNames

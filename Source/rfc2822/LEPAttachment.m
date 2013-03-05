@@ -112,11 +112,6 @@ static char * get_content_type_str(struct mailmime_content * content)
 	return self;
 } 
 
-- (void) dealloc
-{
-    [_data release];
-	[super dealloc];
-}
 
 + (NSArray *) attachmentsWithMIME:(struct mailmime *)mime
 {
@@ -145,7 +140,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 					[subAttachments addObject:subResult];
 				}
 				
-				attachment = [[[LEPAlternativeAttachment alloc] init] autorelease];
+				attachment = [[LEPAlternativeAttachment alloc] init];
 				[attachment setAttachments:subAttachments];
 				return [NSArray arrayWithObject:attachment];
 			}
@@ -255,7 +250,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 		}
 	}
 	
-	return [result autorelease];
+	return result;
 }
 
 + (LEPMessageAttachment *) _attachmentWithMessageMIME:(struct mailmime *)mime
@@ -270,7 +265,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 	attachments = [LEPAttachment attachmentsWithMIME:mime->mm_data.mm_message.mm_msg_mime];
 	[attachment setAttachments:attachments];
 	
-	return [attachment autorelease];
+	return attachment;
 }
 
 + (LEPAbstractAttachment *) attachmentWithMIME:(struct mailmime *)mime
@@ -309,7 +304,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 
 + (LEPAttachment *) attachmentWithContentsOfFile:(NSString *)filename
 {
-	return [[[self alloc] initWithContentsOfFile:filename] autorelease];
+	return [[self alloc] initWithContentsOfFile:filename];
 }
 
 + (LEPAttachment *) attachmentWithHTMLString:(NSString *)html
@@ -329,7 +324,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 		data = [html dataUsingEncoding:NSUTF8StringEncoding];
 		[attachment setData:data];
 		
-		return [attachment autorelease];
+		return attachment;
 	}
 	else {
 		LEPAlternativeAttachment * alternativeAttachment;
@@ -343,9 +338,8 @@ static char * get_content_type_str(struct mailmime_content * content)
 		attachment = [self attachmentWithHTMLString:html withTextAlternative:NO];
 		[attachments addObject:attachment];
 		[alternativeAttachment setAttachments:attachments];
-		[attachments release];
 		
-		return [alternativeAttachment autorelease];
+		return alternativeAttachment;
 	}
 }
 
@@ -360,7 +354,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 	data = [stringValue dataUsingEncoding:NSUTF8StringEncoding];
 	[attachment setData:data];
 	
-	return [attachment autorelease];
+	return attachment;
 }
 
 - (id) initWithContentsOfFile:(NSString *)filename
@@ -376,7 +370,6 @@ static char * get_content_type_str(struct mailmime_content * content)
 	}
 	[self setFilename:[filename lastPathComponent]];
 	[self setData:data];
-	[data release];
 	
 	return self;
 }
@@ -385,7 +378,7 @@ static char * get_content_type_str(struct mailmime_content * content)
 {
 	self = [super initWithCoder:coder];
 	
-	_data = [[coder decodeObjectForKey:@"data"] retain];
+	_data = [coder decodeObjectForKey:@"data"];
 	
 	return self;
 }

@@ -26,22 +26,22 @@
 	NSString * _userAgent;
 }
 
-@property (nonatomic, retain) NSString * messageID;
+@property (nonatomic, strong) NSString * messageID;
 @property (nonatomic, copy) NSArray * /* NSString */ references;
 @property (nonatomic, copy) NSArray * /* NSString */ inReplyTo;
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSDate * internalDate;
+@property (nonatomic, strong) NSDate * date;
+@property (nonatomic, strong) NSDate * internalDate;
 
-@property (nonatomic, retain) LEPAddress * sender;
-@property (nonatomic, retain) LEPAddress * from;
+@property (nonatomic, strong) LEPAddress * sender;
+@property (nonatomic, strong) LEPAddress * from;
 @property (nonatomic, copy) NSArray * /* LEPAddress */ to;
 @property (nonatomic, copy) NSArray * /* LEPAddress */ cc;
 @property (nonatomic, copy) NSArray * /* LEPAddress */ bcc;
 @property (nonatomic, copy) NSArray * /* LEPAddress */ replyTo;
-@property (nonatomic, retain) NSString * subject;
-@property (nonatomic, retain, readonly) NSString * extractedSubject;
-@property (nonatomic, retain, readonly) NSString * partialExtractedSubject;
+@property (nonatomic, strong) NSString * subject;
+@property (nonatomic, strong, readonly) NSString * extractedSubject;
+@property (nonatomic, strong, readonly) NSString * partialExtractedSubject;
 
 // X-Mailer, currently only used when generating message
 @property (nonatomic, copy) NSString * userAgent;

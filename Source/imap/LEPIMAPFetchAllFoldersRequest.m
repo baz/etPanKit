@@ -22,7 +22,7 @@
 
 - (void) mainRequest
 {
-	_folders = [[_session _fetchAllFoldersWithAccount:_account usingXList:_useXList] retain];
+	_folders = [_session _fetchAllFoldersWithAccount:_account usingXList:_useXList];
 }
 
 - (void) mainFinished
@@ -37,7 +37,6 @@
         }
     }
     [_account setupWithFoldersPaths:paths];
-    [paths release];
 }
 
 @end

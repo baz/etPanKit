@@ -33,17 +33,11 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_messageData release];
-	[_path release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
-	_messageData = [[_session _fetchMessageWithUID:_uid path:_path
-                     progressDelegate:self] retain];
+	_messageData = [_session _fetchMessageWithUID:_uid path:_path
+                     progressDelegate:self];
 }
 
 - (void) LEPIMAPSession:(LEPIMAPSession *)session bodyProgressWithCurrent:(size_t)current maximum:(size_t)maximum

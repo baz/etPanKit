@@ -18,7 +18,7 @@
 // HTMLBody will be placed as first attachment with text alternative if no body is set
 @property (nonatomic, copy) NSString * HTMLBody;
 // can be LEPAttachment or LEPMessageAttachment
-@property (nonatomic, retain) NSArray * /* LEPAbstractAttachment */ attachments;
+@property (nonatomic, strong) NSArray * /* LEPAbstractAttachment */ attachments;
 @property (nonatomic, copy) NSString * boundaryPrefix;
 
 - (void) addAttachment:(LEPAbstractAttachment *)attachment;

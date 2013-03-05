@@ -22,15 +22,10 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_capabilities release];
-	[super dealloc];
-}
 
 - (void) mainRequest
 {
-    _capabilities = [[_session _capabilitiesForSelection:_selectionEnabled] retain];
+    _capabilities = [_session _capabilitiesForSelection:_selectionEnabled];
 }
 
 @end

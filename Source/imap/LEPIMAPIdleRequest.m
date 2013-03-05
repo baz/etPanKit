@@ -24,11 +24,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-    [_path release];
-	[super dealloc];
-}
 
 - (void) startRequest
 {
