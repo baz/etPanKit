@@ -145,6 +145,7 @@
 		C6F952AD129E8EB8005852A4 /* LEPCertificateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F952AB129E8EB8005852A4 /* LEPCertificateUtils.m */; };
 		C6F956D2129ED302005852A4 /* LEPSMTPCheckRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F956D0129ED302005852A4 /* LEPSMTPCheckRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6F956D3129ED302005852A4 /* LEPSMTPCheckRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F956D1129ED302005852A4 /* LEPSMTPCheckRequest.m */; };
+		FD16A97C16E5C860006B361A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD16A97B16E5C860006B361A /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -323,6 +324,7 @@
 		C6F956D0129ED302005852A4 /* LEPSMTPCheckRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEPSMTPCheckRequest.h; sourceTree = "<group>"; };
 		C6F956D1129ED302005852A4 /* LEPSMTPCheckRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEPSMTPCheckRequest.m; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		FD16A97B16E5C860006B361A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD16A97C16E5C860006B361A /* libxml2.dylib in Frameworks */,
 				C63C935611037309006B5066 /* libetpan.a in Frameworks */,
 				C6E5725C1103E73000897274 /* Foundation.framework in Frameworks */,
 				C6F94F24129E6776005852A4 /* Security.framework in Frameworks */,
@@ -350,6 +353,7 @@
 		0867D691FE84028FC02AAC07 /* etPanKit */ = {
 			isa = PBXGroup;
 			children = (
+				FD16A97B16E5C860006B361A /* libxml2.dylib */,
 				C63C92BD110372FA006B5066 /* Externals */,
 				C655A76610F11344009E6B45 /* Source */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -873,6 +877,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = etPanKit_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Externals/libetpan/include",
+					/usr/include/libxml2,
+				);
 				ICU_LDFLAGS = "$(SRCROOT)/Externals/icu/lib/libicui18n.a $(SRCROOT)/Externals/icu/lib/libicuuc.a $(SRCROOT)/Externals/icu/lib/libicudata.a";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -882,7 +890,6 @@
 					"-lssl",
 					"-lcrypto",
 					"-liconv",
-					"$(SRCROOT)/Externals/libxml2/lib/libxml2.a",
 				);
 				PRODUCT_NAME = EtPanKit;
 				WRAPPER_EXTENSION = framework;
@@ -900,6 +907,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = etPanKit_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Externals/libetpan/include",
+					/usr/include/libxml2,
+				);
 				ICU_LDFLAGS = "$(SRCROOT)/Externals/icu/lib/libicui18n.a $(SRCROOT)/Externals/icu/lib/libicuuc.a $(SRCROOT)/Externals/icu/lib/libicudata.a";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -909,7 +920,6 @@
 					"-lssl",
 					"-lcrypto",
 					"-liconv",
-					"$(SRCROOT)/Externals/libxml2/lib/libxml2.a",
 				);
 				PRODUCT_NAME = EtPanKit;
 				WRAPPER_EXTENSION = framework;
@@ -930,7 +940,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -946,7 +956,7 @@
 					"$(SRCROOT)/Externals/libxml2/include/libxml2",
 				);
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
